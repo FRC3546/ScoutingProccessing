@@ -10,6 +10,7 @@ public class DataDefinitions {
     private HeaderManagement pitScoutingHeaders = new HeaderManagement();
     private HeaderManagement matchScoutingHeaders = new HeaderManagement();
     private HashMap<String, CrossCapability> crossCapabilityHeaderDefinition = new HashMap<>();
+    private HashMap<String, Alliance> allianceDefinition = new HashMap<>();
 
     private static void setup(){
         if (instance != null) throw new IllegalArgumentException();
@@ -96,6 +97,9 @@ public class DataDefinitions {
         instance.crossCapabilityHeaderDefinition.put("Crosses Slowly", CrossCapability.CrossSlow);
         instance.crossCapabilityHeaderDefinition.put("Crosses", CrossCapability.Cross);
         instance.crossCapabilityHeaderDefinition.put("Crosses Swiftly", CrossCapability.CrossSwiftly);
+
+        instance.allianceDefinition.put("Red", Alliance.Red);
+        instance.allianceDefinition.put("Blue", Alliance.Blue);
     }
 
     public class SheetNames {
@@ -123,6 +127,16 @@ public class DataDefinitions {
         public static final String scale = "Scale?";
     }
 
+    public class TBAConnection {
+        public static final String eventCodeDelimiter = "<CODE>";
+        public static final String matches_url =
+                "http://www.thebluealliance.com/api/v2/event/" + eventCodeDelimiter + "/matches";
+        public static final String tbaAppIdHeaderName = "X-TBA-App-Id";
+        public static final String tbaAppId = "frc3546:scouting2016:v0.1";
+        public static final String eventCode = "2016scmb";
+
+    }
+
     public static DataDefinitions getInstance(){
         if (instance == null) setup();
         return instance;
@@ -138,5 +152,9 @@ public class DataDefinitions {
 
     public HashMap<String, CrossCapability> getCrossCapabilityHeaderDefinition() {
         return crossCapabilityHeaderDefinition;
+    }
+
+    public HashMap<String, Alliance> getAllianceDefinition() {
+        return allianceDefinition;
     }
 }
