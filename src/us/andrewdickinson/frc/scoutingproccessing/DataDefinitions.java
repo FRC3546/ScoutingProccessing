@@ -10,7 +10,12 @@ public class DataDefinitions {
     private HeaderManagement pitScoutingHeaders = new HeaderManagement();
     private HeaderManagement matchScoutingHeaders = new HeaderManagement();
     private HashMap<String, CrossCapability> crossCapabilityHeaderDefinition = new HashMap<>();
+    private HashMap<String, CrossAction> crossActionHeaderDefinition = new HashMap<>();
     private HashMap<String, Alliance> allianceDefinition = new HashMap<>();
+    private HashMap<String, Defense> defenseDefinition = new HashMap<>();
+    private HashMap<String, Quality> qualityDefinition = new HashMap<>();
+    private HashMap<String, EndgameAction> endgameActionDefinition = new HashMap<>();
+    private HashMap<String, AutonomousCrossAction> autoCrossDefinition = new HashMap<>();
 
     private static void setup(){
         if (instance != null) throw new IllegalArgumentException();
@@ -33,7 +38,7 @@ public class DataDefinitions {
         instance.pitScoutingHeaders.addHeader("endgame_claims", "Endgame. Can they...");
         instance.pitScoutingHeaders.addHeader("comments", "Comments (Optional)");
 
-        instance.matchScoutingHeaders.addHeader("matchnum", "Match Number");
+        instance.matchScoutingHeaders.addHeader("matchnum", "Match Number (i.e. \"3\" or \"27\")");
         instance.matchScoutingHeaders.addHeader("alliance", "Which Alliance?");
 
         for (int i = 1; i <= 3; i++) {
@@ -62,8 +67,38 @@ public class DataDefinitions {
         instance.crossCapabilityHeaderDefinition.put("Crosses", CrossCapability.Cross);
         instance.crossCapabilityHeaderDefinition.put("Crosses Swiftly", CrossCapability.CrossSwiftly);
 
+        instance.crossActionHeaderDefinition.put("Did Not Attempt", CrossAction.NotAttempted);
+        instance.crossActionHeaderDefinition.put("Failed to Cross", CrossAction.CrossFailed);
+        instance.crossActionHeaderDefinition.put("Crossed Poorly", CrossAction.CrossedPoorly);
+        instance.crossActionHeaderDefinition.put("Crossed Well", CrossAction.CrossedWell);
+
+
         instance.allianceDefinition.put("Red", Alliance.Red);
         instance.allianceDefinition.put("Blue", Alliance.Blue);
+
+        instance.defenseDefinition.put("Low Bar", Defense.Low_Bar);
+        instance.defenseDefinition.put("Cheval De Frise", Defense.Cheval_De_Frise);
+        instance.defenseDefinition.put("Portcullis", Defense.Portcullis);
+        instance.defenseDefinition.put("Ramparts", Defense.Ramparts);
+        instance.defenseDefinition.put("Moat", Defense.Moat);
+        instance.defenseDefinition.put("Sally Port", Defense.Sally_Port);
+        instance.defenseDefinition.put("Drawbridge", Defense.Drawbridge);
+        instance.defenseDefinition.put("Rough Terrain", Defense.Rough_Terrain);
+        instance.defenseDefinition.put("Rock Wall", Defense.Rock_Wall);
+        instance.defenseDefinition.put("None", null);
+
+        instance.qualityDefinition.put("The robot played defense poorly", Quality.Poor);
+        instance.qualityDefinition.put("The robot played defense well", Quality.Well);
+        instance.qualityDefinition.put("The robot did not play defense", null);
+
+        instance.endgameActionDefinition.put("Nothing", EndgameAction.Nothing);
+        instance.endgameActionDefinition.put("Drove on to Batter (\"Challenge\")", EndgameAction.Challenge);
+        instance.endgameActionDefinition.put("Attempted to Climb", EndgameAction.AttemptedScale);
+        instance.endgameActionDefinition.put("Successfully climbed (\"Scale\")", EndgameAction.Scale);
+
+        instance.autoCrossDefinition.put("Did nothing related to the defense", AutonomousCrossAction.Nothing);
+        instance.autoCrossDefinition.put("Reached the defense", AutonomousCrossAction.Reach);
+        instance.autoCrossDefinition.put("Crossed the defense", AutonomousCrossAction.Cross);
     }
 
     public class SheetNames {
@@ -77,6 +112,15 @@ public class DataDefinitions {
         public static final String reach_defense = "Reach a defense?";
         public static final String score_high = "Score Low?";
         public static final String score_low = "Score High?";
+    }
+
+    public class AutoScoreWords {
+        public static final String scored = "Scored";
+        public static final String missed = "Missed";
+        public static final String low_goal = "Low";
+        public static final String high_goal = "High";
+        public static final String no_attempt = "Did not attempt to score";
+        public static final String didCrossMidlineWord = "Yes";
     }
 
     public class BoulderClaims {
@@ -118,7 +162,27 @@ public class DataDefinitions {
         return crossCapabilityHeaderDefinition;
     }
 
+    public HashMap<String, CrossAction> getCrossActionHeaderDefinition() {
+        return crossActionHeaderDefinition;
+    }
+
     public HashMap<String, Alliance> getAllianceDefinition() {
         return allianceDefinition;
+    }
+
+    public HashMap<String, Defense> getDefenseDefinition() {
+        return defenseDefinition;
+    }
+
+    public HashMap<String, Quality> getQualityDefinition() {
+        return qualityDefinition;
+    }
+
+    public HashMap<String, EndgameAction> getEndgameActionDefinition() {
+        return endgameActionDefinition;
+    }
+
+    public HashMap<String, AutonomousCrossAction> getAutoCrossDefinition() {
+        return autoCrossDefinition;
     }
 }
