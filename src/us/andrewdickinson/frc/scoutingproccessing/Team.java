@@ -66,7 +66,7 @@ public class Team {
         return drivetrain;
     }
 
-    public double getGround_clearance() {
+    public double getGroundClearance() {
         return ground_clearance;
     }
 
@@ -74,51 +74,51 @@ public class Team {
         return comment;
     }
 
-    public boolean isClaim_auto_score_high() {
+    public boolean getClaimAutoScoreHigh() {
         return claim_auto_score_high;
     }
 
-    public boolean isClaim_auto_score_low() {
+    public boolean getClaimAutoScoreLow() {
         return claim_auto_score_low;
     }
 
-    public boolean isClaim_auto_cross_low_bar() {
+    public boolean getClaimAutoCrossLowBar() {
         return claim_auto_cross_low_bar;
     }
 
-    public boolean isClaim_auto_cross_other_defense() {
+    public boolean getClaimAutoCrossOtherDefense() {
         return claim_auto_cross_other_defense;
     }
 
-    public boolean isClaim_auto_reach_defense() {
+    public boolean getClaimAutoReachDefense() {
         return claim_auto_reach_defense;
     }
 
-    public HashMap<Defense, CrossCapability> getClaim_teleop_defense_cross_ability() {
+    public HashMap<Defense, CrossCapability> getClaimTeleopDefenseCrossAbility() {
         return claim_teleop_defense_cross_ability;
     }
 
-    public boolean isClaim_teleop_boulder_herd() {
+    public boolean getClaimTeleopBoulderHerd() {
         return claim_teleop_boulder_herd;
     }
 
-    public boolean isClaim_teleop_boulder_pickup() {
+    public boolean getClaimTeleopBoulderPickup() {
         return claim_teleop_boulder_pickup;
     }
 
-    public boolean isClaim_teleop_boulder_lowgoal() {
+    public boolean getClaimTeleopBoulderLowgoal() {
         return claim_teleop_boulder_lowgoal;
     }
 
-    public boolean isClaim_teleop_boulder_highgoal() {
+    public boolean getClaimTeleopBoulderHighgoal() {
         return claim_teleop_boulder_highgoal;
     }
 
-    public boolean isClaim_teleop_challenge() {
+    public boolean getClaimTeleopChallenge() {
         return claim_teleop_challenge;
     }
 
-    public boolean isClaim_teleop_scale() {
+    public boolean getClaimTeleopScale() {
         return claim_teleop_scale;
     }
 

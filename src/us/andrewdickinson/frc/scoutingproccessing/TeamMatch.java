@@ -58,47 +58,47 @@ public class TeamMatch {
         return team_number;
     }
 
-    public int getMatch_number() {
+    public int getMatchNumber() {
         return match_number;
     }
 
-    public Defense getAuto_staged_defense() {
+    public Defense getAutoStagedDefense() {
         return auto_staged_defense;
     }
 
-    public AutonomousCrossAction getAuto_defense_action() {
+    public AutonomousCrossAction getAutoDefenseAction() {
         return auto_defense_action;
     }
 
-    public Goal getAuto_attempted_score_goal() {
+    public Goal getAutoAttemptedScoreGoal() {
         return auto_attempted_score_goal;
     }
 
-    public boolean isAuto_score_successful() {
+    public boolean isAutoScoreSuccessful() {
         return auto_score_successful;
     }
 
-    public boolean isAuto_robot_crossed_midline() {
+    public boolean inAutoRobotCrossedMidline() {
         return auto_robot_crossed_midline;
     }
 
-    public Map<Defense, CrossAction> getTeleop_defense_success() {
+    public HashMap<Defense, CrossAction> getTeleopDefenseSuccess() {
         return teleop_defense_success;
     }
 
-    public int getTeleop_balls_scored_low() {
+    public int getTeleopBallsScoredLow() {
         return teleop_balls_scored_low;
     }
 
-    public int getTeleop_balls_scored_high() {
+    public int getTeleopBallsScoredHigh() {
         return teleop_balls_scored_high;
     }
 
-    public EndgameAction getTeleop_endgame_action() {
+    public EndgameAction getTeleopEndgameAction() {
         return teleop_endgame_action;
     }
 
-    public Quality getTeleop_defense_quality() {
+    public Quality getTeleopDefenseQuality() {
         return teleop_defense_quality;
     }
 
@@ -136,6 +136,9 @@ public class TeamMatch {
         public Builder auto_defense_action(String auto_defense_action) {
             this.auto_defense_action = DataDefinitions.getInstance()
                     .getAutoCrossDefinition().get(auto_defense_action);
+            if (auto_staged_defense == null && this.auto_defense_action != AutonomousCrossAction.Nothing){
+                throw new IllegalArgumentException("You cannot reach a defense you didn't set up in front of");
+            }
             return this;
         }
 
