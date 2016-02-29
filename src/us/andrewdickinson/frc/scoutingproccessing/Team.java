@@ -32,6 +32,7 @@ public class Team {
 
     private Team(Builder b) {
         this.team_number = b.team_number;
+        this.match_data = new ArrayList<>();
         this.drivetrain = b.drivetrain;
         this.ground_clearance = b.ground_clearance;
         this.comment = b.comment;
