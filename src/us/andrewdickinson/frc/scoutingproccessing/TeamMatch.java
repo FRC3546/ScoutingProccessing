@@ -1,7 +1,6 @@
 package us.andrewdickinson.frc.scoutingproccessing;
 
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +38,7 @@ public class TeamMatch {
     //Commentary
     private String comment;
 
-    public TeamMatch(Builder b) {
+    private TeamMatch(Builder b) {
         this.team_number = b.team_number;
         this.match_number = b.match_number;
         this.auto_staged_defense = b.auto_staged_defense;
@@ -125,55 +124,141 @@ public class TeamMatch {
         public Builder(int team_number, int match_number) {
             this.team_number = team_number;
             this.match_number = match_number;
+            teleop_defense_success = new HashMap<>();
         }
 
-        public Builder auto_staged_defense(Defense auto_staged_defense) {
-            this.auto_staged_defense = auto_staged_defense;
+        public Builder auto_staged_defense(String auto_staged_defense) {
+            this.auto_staged_defense = DataDefinitions.getInstance()
+                    .getDefenseDefinition().get(auto_staged_defense);
             return this;
         }
 
-        public Builder auto_defense_action(AutonomousCrossAction auto_defense_action) {
-            this.auto_defense_action = auto_defense_action;
+        public Builder auto_defense_action(String auto_defense_action) {
+            this.auto_defense_action = DataDefinitions.getInstance()
+                    .getAutoCrossDefinition().get(auto_defense_action);
             return this;
         }
 
-        public Builder auto_attempted_score_goal(Goal auto_attempted_score_goal) {
-            this.auto_attempted_score_goal = auto_attempted_score_goal;
+        public Builder auto_attempted_score(String auto_attempted_score) {
+            if (auto_attempted_score.contains(DataDefinitions.AutoScoreWords.no_attempt)) {
+                auto_attempted_score_goal = null;
+            } else if (auto_attempted_score.contains(DataDefinitions.AutoScoreWords.low_goal)){
+                auto_attempted_score_goal = Goal.Low;
+            } else if (auto_attempted_score.contains(DataDefinitions.AutoScoreWords.high_goal)){
+                auto_attempted_score_goal = Goal.High;
+            }
+
+            auto_score_successful = auto_attempted_score.contains(DataDefinitions.AutoScoreWords.scored);
             return this;
         }
 
-        public Builder auto_score_successful(boolean auto_score_successful) {
-            this.auto_score_successful = auto_score_successful;
+        public Builder auto_robot_crossed_midline(String auto_robot_crossed_midline) {
+            this.auto_robot_crossed_midline = auto_robot_crossed_midline
+                    .contains(DataDefinitions.AutoScoreWords.didCrossMidlineWord);
             return this;
         }
 
-        public Builder auto_robot_crossed_midline(boolean auto_robot_crossed_midline) {
-            this.auto_robot_crossed_midline = auto_robot_crossed_midline;
+        public Builder teleop_lowbar_cross_success(String teleop_cross_success) {
+            teleop_defense_success.put(Defense.Low_Bar,
+                    DataDefinitions.getInstance()
+                            .getCrossActionHeaderDefinition()
+                            .get(teleop_cross_success)
+            );
             return this;
         }
 
-        public Builder teleop_defense_success(HashMap<Defense, CrossAction> teleop_defense_success) {
-            this.teleop_defense_success = teleop_defense_success;
+        public Builder teleop_chevaldefrise_cross_success(String teleop_cross_success) {
+            teleop_defense_success.put(Defense.Cheval_De_Frise,
+                    DataDefinitions.getInstance()
+                            .getCrossActionHeaderDefinition()
+                            .get(teleop_cross_success)
+            );
             return this;
         }
 
-        public Builder teleop_balls_scored_low(int teleop_balls_scored_low) {
-            this.teleop_balls_scored_low = teleop_balls_scored_low;
+        public Builder teleop_portcullis_cross_success(String teleop_cross_success) {
+            teleop_defense_success.put(Defense.Portcullis,
+                    DataDefinitions.getInstance()
+                            .getCrossActionHeaderDefinition()
+                            .get(teleop_cross_success)
+            );
             return this;
         }
 
-        public Builder teleop_balls_scored_high(int teleop_balls_scored_high) {
-            this.teleop_balls_scored_high = teleop_balls_scored_high;
+        public Builder teleop_ramparts_cross_success(String teleop_cross_success) {
+            teleop_defense_success.put(Defense.Ramparts,
+                    DataDefinitions.getInstance()
+                            .getCrossActionHeaderDefinition()
+                            .get(teleop_cross_success)
+            );
             return this;
         }
 
-        public Builder teleop_endgame_action(EndgameAction teleop_endgame_action) {
-            this.teleop_endgame_action = teleop_endgame_action;
+        public Builder teleop_moat_cross_success(String teleop_cross_success) {
+            teleop_defense_success.put(Defense.Moat,
+                    DataDefinitions.getInstance()
+                            .getCrossActionHeaderDefinition()
+                            .get(teleop_cross_success)
+            );
             return this;
         }
 
-        public Builder teleop_defense_quality(Quality teleop_defense_quality) {
-            this.teleop_defense_quality = teleop_defense_quality;
+        public Builder teleop_sallyport_cross_success(String teleop_cross_success) {
+            teleop_defense_success.put(Defense.Sally_Port,
+                    DataDefinitions.getInstance()
+                            .getCrossActionHeaderDefinition()
+                            .get(teleop_cross_success)
+            );
+            return this;
+        }
+
+        public Builder teleop_drawbridge_cross_success(String teleop_cross_success) {
+            teleop_defense_success.put(Defense.Drawbridge,
+                    DataDefinitions.getInstance()
+                            .getCrossActionHeaderDefinition()
+                            .get(teleop_cross_success)
+            );
+            return this;
+        }
+
+        public Builder teleop_roughterrain_cross_success(String teleop_cross_success) {
+            teleop_defense_success.put(Defense.Rough_Terrain,
+                    DataDefinitions.getInstance()
+                            .getCrossActionHeaderDefinition()
+                            .get(teleop_cross_success)
+            );
+            return this;
+        }
+
+        public Builder teleop_rockwall_cross_success(String teleop_cross_success) {
+            teleop_defense_success.put(Defense.Rock_Wall,
+                    DataDefinitions.getInstance()
+                            .getCrossActionHeaderDefinition()
+                            .get(teleop_cross_success)
+            );
+            return this;
+        }
+
+
+        public Builder teleop_balls_scored_low(String teleop_balls_scored_low) {
+            this.teleop_balls_scored_low = Double.valueOf(teleop_balls_scored_low).intValue();
+            return this;
+        }
+
+        public Builder teleop_balls_scored_high(String teleop_balls_scored_high) {
+            this.teleop_balls_scored_high = Double.valueOf(teleop_balls_scored_high).intValue();
+            return this;
+        }
+
+        public Builder teleop_endgame_action(String teleop_endgame_action) {
+            this.teleop_endgame_action = DataDefinitions.getInstance()
+                    .getEndgameActionDefinition().get(teleop_endgame_action);
+            return this;
+        }
+
+        public Builder teleop_defense_quality(String teleop_defense_quality) {
+            this.teleop_defense_quality = DataDefinitions.getInstance()
+                    .getQualityDefinition().get(teleop_defense_quality);
             return this;
         }
 
