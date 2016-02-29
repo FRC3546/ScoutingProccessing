@@ -62,6 +62,44 @@ public class TBACommunication {
         throw new IllegalArgumentException();
     }
 
+    public int[] getRedTeams(int match) {
+        for (int i =  0; i < matches.length(); i++){
+            if (matches.getJSONObject(i).getInt("match_number") == match){
+                JSONObject alliances = matches.getJSONObject(i).getJSONObject("alliances");
+
+                JSONArray teams = alliances.getJSONObject("red").getJSONArray("teams");
+
+                int[] team_nums = new int[3];
+                for (int j = 0; j <= 2; j++){
+                    team_nums[j] = Integer.parseInt(teams.getString(j).substring(3));
+                }
+
+                return team_nums;
+            }
+        }
+
+        throw new IllegalArgumentException();
+    }
+
+    public int[] getBlueTeams(int match){
+        for (int i =  0; i < matches.length(); i++){
+            if (matches.getJSONObject(i).getInt("match_number") == match){
+                JSONObject alliances = matches.getJSONObject(i).getJSONObject("alliances");
+
+                JSONArray teams = alliances.getJSONObject("blue").getJSONArray("teams");
+
+                int[] team_nums = new int[3];
+                for (int j = 0; j <= 2; j++){
+                    team_nums[j] = Integer.parseInt(teams.getString(j).substring(3));
+                }
+
+                return team_nums;
+            }
+        }
+
+        throw new IllegalArgumentException();
+    }
+
     private void getMatches() throws IOException{
         String url = DataDefinitions.TBAConnection.matches_url
                 .replace(DataDefinitions.TBAConnection.eventCodeDelimiter, eventCode);
