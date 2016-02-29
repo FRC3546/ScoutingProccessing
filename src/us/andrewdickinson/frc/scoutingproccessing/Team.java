@@ -30,7 +30,7 @@ public class Team {
     private boolean claim_teleop_challenge;
     private boolean claim_teleop_scale;
 
-    public Team(Builder b) {
+    private Team(Builder b) {
         this.team_number = b.team_number;
         this.match_data = b.match_data;
         this.drivetrain = b.drivetrain;
