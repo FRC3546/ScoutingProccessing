@@ -32,7 +32,6 @@ public class Team {
 
     private Team(Builder b) {
         this.team_number = b.team_number;
-        this.match_data = b.match_data;
         this.drivetrain = b.drivetrain;
         this.ground_clearance = b.ground_clearance;
         this.comment = b.comment;
@@ -50,11 +49,15 @@ public class Team {
         this.claim_teleop_scale = b.claim_teleop_scale;
     }
 
-    public int getTeam_number() {
+    public void addTeamMatch(TeamMatch teamMatch){
+        match_data.add(teamMatch);
+    }
+
+    public int getTeamNumber() {
         return team_number;
     }
 
-    public ArrayList<TeamMatch> getMatch_data() {
+    public ArrayList<TeamMatch> getTeamMatches() {
         return match_data;
     }
 

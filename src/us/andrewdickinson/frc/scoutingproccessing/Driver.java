@@ -8,8 +8,8 @@ import java.util.*;
  */
 public class Driver {
     public static void main(String[] args) throws IOException {
-        ArrayList<TeamMatch> teams = Importer
-                .importTeamMatches("/home/Andrew/gdrive/Master_Spreadsheet/Master_Spreadsheet.xlsx");
+        HashMap<Integer, Team> teams = Importer
+                .importAllData("/home/Andrew/gdrive/Master_Spreadsheet/Master_Spreadsheet.xlsx");
 
     }
 }

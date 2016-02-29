@@ -6,11 +6,34 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Andrew on 2/28/16.
  */
 public class Importer {
+    public static HashMap<Integer, Team> importAllData(String xlsxFilePath) throws IOException{
+        ArrayList<Team> teams = importTeams(xlsxFilePath);
+
+        HashMap<Integer, Team> teamHashMap = new HashMap<>();
+        for (Team team : teams){
+            teamHashMap.put(team.getTeamNumber(), team);
+        }
+
+        ArrayList<TeamMatch> teamMatches = importTeamMatches(xlsxFilePath);
+
+        for (TeamMatch teamMatch : teamMatches){
+            if (teamHashMap.containsKey(teamMatch.getTeamNumber())){
+                teamHashMap.get(teamMatch.getTeamNumber()).addTeamMatch(teamMatch);
+            } else {
+                throw new IndexOutOfBoundsException("No pit scouting entry for match-scouted team: " + teamMatch.getTeamNumber());
+            }
+        }
+
+        return teamHashMap;
+    }
+
+
     public static ArrayList<Team> importTeams(String xlsxFilePath) throws IOException {
         ArrayList<ArrayList<String>> team_data_sheet =
                 getArrayListFromFile(xlsxFilePath, DataDefinitions.SheetNames.pitScouting);

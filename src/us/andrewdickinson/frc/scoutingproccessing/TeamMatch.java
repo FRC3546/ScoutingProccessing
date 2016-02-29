@@ -54,7 +54,7 @@ public class TeamMatch {
         this.comment = b.comment;
     }
 
-    public int getTeam_number() {
+    public int getTeamNumber() {
         return team_number;
     }
 
