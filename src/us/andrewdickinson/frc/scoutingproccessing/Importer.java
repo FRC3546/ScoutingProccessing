@@ -26,7 +26,8 @@ public class Importer {
             if (teamHashMap.containsKey(teamMatch.getTeamNumber())){
                 teamHashMap.get(teamMatch.getTeamNumber()).addTeamMatch(teamMatch);
             } else {
-                throw new IndexOutOfBoundsException("No pit scouting entry for match-scouted team: " + teamMatch.getTeamNumber());
+                //TODO: Re-enable this error
+//                throw new IndexOutOfBoundsException("No pit scouting entry for match-scouted team: " + teamMatch.getTeamNumber());
             }
         }
 
@@ -97,7 +98,7 @@ public class Importer {
                     .get(row.get(hm.indexForUID("alliance")));
 
 
-            for (int station = 1; station <= 3; station++) {
+            for (int station = 1; station <= 1; station++) { //TODO: Change to <= 3
                 int team_number = TBACommunication.getInstance().getTeam(match_number, alliance, station);
 
                 TeamMatch.Builder b = new TeamMatch.Builder(team_number, match_number);
