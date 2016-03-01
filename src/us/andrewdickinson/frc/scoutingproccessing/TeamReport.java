@@ -218,6 +218,19 @@ public class TeamReport {
         return defensePerformance;
     }
 
+    public String getPitScout(){
+        return team.getPitScoutName();
+    }
+
+    public ArrayList<String> getMatchScouts(){
+        ArrayList<String> scouts = new ArrayList<>();
+        for (TeamMatch teamMatch : team.getTeamMatches()){
+            scouts.add(teamMatch.getScoutName());
+        }
+
+        return scouts;
+    }
+
     public ArrayList<String> getComments(){
         ArrayList<String> comments = new ArrayList<>();
         for (TeamMatch teamMatch : team.getTeamMatches()){
