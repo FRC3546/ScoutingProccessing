@@ -68,6 +68,8 @@ public class Importer {
             b.claim_teleop_rockwall_cross_ability(row.get(hm.indexForUID("rockwall_claim")));
             b.boulder_claims(row.get(hm.indexForUID("boulder_claims")));
             b.endgame_claims(row.get(hm.indexForUID("endgame_claims")));
+            b.driver_experience(row.get(hm.indexForUID("driver_experience")));
+            b.drive_team_rotated(row.get(hm.indexForUID("rotated_drivers")));
             b.comment(row.get(hm.indexForUID("comments")));
 
             teams.add(b.build());

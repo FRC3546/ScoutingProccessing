@@ -30,6 +30,9 @@ public class Team {
     private boolean claim_teleop_challenge;
     private boolean claim_teleop_scale;
 
+    private boolean rotatesDrivers;
+    private DriverExperience driverExperienceLevel;
+
     private Team(Builder b) {
         this.team_number = b.team_number;
         this.match_data = new ArrayList<>();
@@ -48,6 +51,8 @@ public class Team {
         this.claim_teleop_boulder_highgoal = b.claim_teleop_boulder_highgoal;
         this.claim_teleop_challenge = b.claim_teleop_challenge;
         this.claim_teleop_scale = b.claim_teleop_scale;
+        this.rotatesDrivers = b.rotatesDrivers;
+        this.driverExperienceLevel = b.driverExperienceLevel;
     }
 
     public void addTeamMatch(TeamMatch teamMatch){
@@ -122,9 +127,16 @@ public class Team {
         return claim_teleop_scale;
     }
 
+    public boolean rotatesDrivers() {
+        return rotatesDrivers;
+    }
+
+    public DriverExperience getDriverExperienceLevel() {
+        return driverExperienceLevel;
+    }
+
     public static class Builder {
         private int team_number;
-        private ArrayList<TeamMatch> match_data;
         private String drivetrain;
         private Double ground_clearance;
         private String comment;
@@ -140,6 +152,8 @@ public class Team {
         private Boolean claim_teleop_boulder_highgoal;
         private Boolean claim_teleop_challenge;
         private Boolean claim_teleop_scale;
+        private Boolean rotatesDrivers;
+        private DriverExperience driverExperienceLevel;
 
         public Builder(int team_number) {
             this.team_number = team_number;
@@ -148,11 +162,6 @@ public class Team {
 
         public Builder(String team_number) {
             this(Double.valueOf(team_number).intValue());
-        }
-
-        public Builder match_data(ArrayList<TeamMatch> match_data) {
-            this.match_data = match_data;
-            return this;
         }
 
         public Builder drivetrain(String drivetrain) {
@@ -278,6 +287,17 @@ public class Team {
             return this;
         }
 
+        public Builder drive_team_rotated(String drive_team_rotated){
+            rotatesDrivers = drive_team_rotated.contains(DataDefinitions.DriverClaims.doesRotateDrivers);
+            return this;
+        }
+
+        public Builder driver_experience(String driver_experience){
+            driverExperienceLevel = DataDefinitions.getInstance()
+                    .getDriverExperienceDefinition().get(driver_experience);
+            return this;
+        }
+
         public Team build(){
             boolean complete = this.drivetrain != null &&
                 this.ground_clearance != null &&
@@ -293,12 +313,14 @@ public class Team {
                 this.claim_teleop_boulder_lowgoal != null &&
                 this.claim_teleop_boulder_highgoal != null &&
                 this.claim_teleop_challenge != null &&
-                this.claim_teleop_scale != null;
+                this.claim_teleop_scale != null &&
+                this.driverExperienceLevel != null &&
+                this.rotatesDrivers != null;
 
             if (complete){
                 return new Team(this);
             } else {
-                throw new IllegalStateException("The builder has not been completed");
+                throw new UnsupportedOperationException("The builder has not been completed");
             }
         }
 

@@ -1,5 +1,6 @@
 package us.andrewdickinson.frc.scoutingproccessing;
 
+import java.sql.*;
 import java.util.HashMap;
 
 /**
@@ -14,6 +15,7 @@ public class DataDefinitions {
     private HashMap<String, Alliance> allianceDefinition = new HashMap<>();
     private HashMap<String, Defense> defenseDefinition = new HashMap<>();
     private HashMap<String, Quality> qualityDefinition = new HashMap<>();
+    private HashMap<String, DriverExperience> driverExperienceDefinition = new HashMap<>();
     private HashMap<String, EndgameAction> endgameActionDefinition = new HashMap<>();
     private HashMap<String, AutonomousCrossAction> autoCrossDefinition = new HashMap<>();
 
@@ -36,6 +38,8 @@ public class DataDefinitions {
         instance.pitScoutingHeaders.addHeader("rockwall_claim", "Defense Crossing Ability (Teleop) [Rock Wall]");
         instance.pitScoutingHeaders.addHeader("boulder_claims", "Boulder Manipulation. Can they...");
         instance.pitScoutingHeaders.addHeader("endgame_claims", "Endgame. Can they...");
+        instance.pitScoutingHeaders.addHeader("rotated_drivers", "Do you rotate drivers over the course of the day?");
+        instance.pitScoutingHeaders.addHeader("driver_experience", "How long have your drivers been driving?");
         instance.pitScoutingHeaders.addHeader("comments", "Comments (Optional)");
 
         instance.matchScoutingHeaders.addHeader("matchnum", "Match Number (i.e. \"3\" or \"27\")");
@@ -99,6 +103,11 @@ public class DataDefinitions {
         instance.autoCrossDefinition.put("Did nothing related to the defense", AutonomousCrossAction.Nothing);
         instance.autoCrossDefinition.put("Reached the defense", AutonomousCrossAction.Reach);
         instance.autoCrossDefinition.put("Crossed the defense", AutonomousCrossAction.Cross);
+
+        instance.driverExperienceDefinition.put(DriverClaims.firstYear, DriverExperience.FirstYear);
+        instance.driverExperienceDefinition.put(DriverClaims.secondYear, DriverExperience.SecondYear);
+        instance.driverExperienceDefinition.put(DriverClaims.thirdYear, DriverExperience.ThirdYear);
+        instance.driverExperienceDefinition.put(DriverClaims.fourthYear, DriverExperience.FourthYear);
     }
 
     public class SheetNames {
@@ -133,6 +142,15 @@ public class DataDefinitions {
     public class EndgameClaims {
         public static final String challenge = "Challenge?";
         public static final String scale = "Scale?";
+    }
+
+    public class DriverClaims {
+        public static final String doesRotateDrivers = "Yes";
+        public static final String doesntRotateDrivers = "No";
+        public static final String firstYear = "This is their first year";
+        public static final String secondYear = "This is their second year";
+        public static final String thirdYear = "This is their third year";
+        public static final String fourthYear = "This is their fourth year";
     }
 
     public class TBAConnection {
@@ -176,6 +194,10 @@ public class DataDefinitions {
 
     public HashMap<String, Quality> getQualityDefinition() {
         return qualityDefinition;
+    }
+
+    public HashMap<String, DriverExperience> getDriverExperienceDefinition() {
+        return driverExperienceDefinition;
     }
 
     public HashMap<String, EndgameAction> getEndgameActionDefinition() {
