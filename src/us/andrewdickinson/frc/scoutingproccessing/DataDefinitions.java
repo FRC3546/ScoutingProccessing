@@ -43,28 +43,26 @@ public class DataDefinitions {
         instance.pitScoutingHeaders.addHeader("comments", "Comments (Optional)");
 
         instance.matchScoutingHeaders.addHeader("matchnum", "Match Number (i.e. \"3\" or \"27\")");
-        instance.matchScoutingHeaders.addHeader("alliance", "Which Alliance?");
-
-        for (int i = 1; i <= 3; i++) {
-            instance.matchScoutingHeaders.addHeader("team" + i + "auto_staged_defense", "Staged In Front of Defense", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "auto_defense_action", "Action (with respect to the above defense)", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "auto_robot_crossed_midline", "Robot Crossed line to opposite side of the field - Incurring a foul (Should be Rare)", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "auto_score", "Scoring", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "lowbar_success", "Defenses [Low Bar]", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "chevaldefrise_success", "Defenses [Cheval De Frise]", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "portcullis_success", "Defenses [Portcullis]", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "ramparts_success", "Defenses [Ramparts]", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "moat_success", "Defenses [Moat]", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "sallyport_success", "Defenses [Sally Port]", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "drawbridge_success", "Defenses [Drawbridge]", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "roughterrain_success", "Defenses [Rough Terrain]", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "rockwall_success", "Defenses [Rock Wall]", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "teleop_balls_scored_low", "Balls Scored (Low)", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "teleop_balls_scored_high", "Balls Scored (High)", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "teleop_endgame_action", "Endgame", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "teleop_defense_quality", "Defense", i - 1);
-            instance.matchScoutingHeaders.addHeader("team" + i + "comment", "Comments (Optional)", i - 1);
-        }
+        instance.matchScoutingHeaders.addHeader("team_number", "Team Number");
+        instance.matchScoutingHeaders.addHeader("auto_staged_defense", "Staged In Front of Defense");
+        instance.matchScoutingHeaders.addHeader("auto_defense_action", "Action (with respect to the above defense)");
+        instance.matchScoutingHeaders.addHeader("auto_robot_crossed_midline", "Robot Crossed line to opposite side of the field - Incurring a foul (Should be Rare)");
+        instance.matchScoutingHeaders.addHeader("auto_score", "Scoring");
+        instance.matchScoutingHeaders.addHeader("lowbar_success", "Defenses [Low Bar]");
+        instance.matchScoutingHeaders.addHeader("chevaldefrise_success", "Defenses [Cheval De Frise]");
+        instance.matchScoutingHeaders.addHeader("portcullis_success", "Defenses [Portcullis]");
+        instance.matchScoutingHeaders.addHeader("ramparts_success", "Defenses [Ramparts]");
+        instance.matchScoutingHeaders.addHeader("moat_success", "Defenses [Moat]");
+        instance.matchScoutingHeaders.addHeader("sallyport_success", "Defenses [Sally Port]");
+        instance.matchScoutingHeaders.addHeader("drawbridge_success", "Defenses [Drawbridge]");
+        instance.matchScoutingHeaders.addHeader("roughterrain_success", "Defenses [Rough Terrain]");
+        instance.matchScoutingHeaders.addHeader("rockwall_success", "Defenses [Rock Wall]");
+        instance.matchScoutingHeaders.addHeader("teleop_balls_scored_low", "Balls Scored (Low)");
+        instance.matchScoutingHeaders.addHeader("teleop_balls_scored_high", "Balls Scored (High)");
+        instance.matchScoutingHeaders.addHeader("teleop_endgame_action", "Endgame");
+        instance.matchScoutingHeaders.addHeader("teleop_defense_quality", "Defense");
+        instance.matchScoutingHeaders.addHeader("comment", "Comments (Optional)");
+        
 
         instance.crossCapabilityHeaderDefinition.put("Cannot Cross Without Assistance", CrossCapability.NotAble);
         instance.crossCapabilityHeaderDefinition.put("Crosses Slowly", CrossCapability.CrossSlow);

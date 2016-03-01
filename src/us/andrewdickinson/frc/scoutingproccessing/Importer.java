@@ -91,40 +91,34 @@ public class Importer {
         ArrayList<TeamMatch> teamMatches = new ArrayList<>();
 
         for (ArrayList<String> row : team_data_sheet){
-            if (row.get(hm.indexForUID("matchnum")).equals("") || row.get(hm.indexForUID("alliance")).equals("")){
+            if (row.get(hm.indexForUID("matchnum")).equals("") || row.get(hm.indexForUID("team_number")).equals("")){
                 continue;
             }
 
             int match_number = Double.valueOf(row.get(hm.indexForUID("matchnum"))).intValue();
-            Alliance alliance = DataDefinitions.getInstance().getAllianceDefinition()
-                    .get(row.get(hm.indexForUID("alliance")));
+            int team_number = Double.valueOf(row.get(hm.indexForUID("team_number"))).intValue();
 
+            TeamMatch.Builder b = new TeamMatch.Builder(team_number, match_number);
+            b.auto_staged_defense(row.get(hm.indexForUID("auto_staged_defense")));
+            b.auto_defense_action(row.get(hm.indexForUID("auto_defense_action")));
+            b.auto_attempted_score(row.get(hm.indexForUID("auto_score")));
+            b.auto_robot_crossed_midline(row.get(hm.indexForUID("auto_robot_crossed_midline")));
+            b.teleop_lowbar_cross_success(row.get(hm.indexForUID("lowbar_success")));
+            b.teleop_chevaldefrise_cross_success(row.get(hm.indexForUID("chevaldefrise_success")));
+            b.teleop_portcullis_cross_success(row.get(hm.indexForUID("portcullis_success")));
+            b.teleop_ramparts_cross_success(row.get(hm.indexForUID("ramparts_success")));
+            b.teleop_moat_cross_success(row.get(hm.indexForUID("moat_success")));
+            b.teleop_sallyport_cross_success(row.get(hm.indexForUID("sallyport_success")));
+            b.teleop_drawbridge_cross_success(row.get(hm.indexForUID("drawbridge_success")));
+            b.teleop_roughterrain_cross_success(row.get(hm.indexForUID("roughterrain_success")));
+            b.teleop_rockwall_cross_success(row.get(hm.indexForUID("rockwall_success")));
+            b.teleop_balls_scored_low(row.get(hm.indexForUID("teleop_balls_scored_low")));
+            b.teleop_balls_scored_high(row.get(hm.indexForUID("teleop_balls_scored_high")));
+            b.teleop_endgame_action(row.get(hm.indexForUID("teleop_endgame_action")));
+            b.teleop_defense_quality(row.get(hm.indexForUID("teleop_defense_quality")));
+            b.comment(row.get(hm.indexForUID("comment")));
 
-            for (int station = 1; station <= 1; station++) { //TODO: Change to <= 3
-                int team_number = TBACommunication.getInstance().getTeam(match_number, alliance, station);
-
-                TeamMatch.Builder b = new TeamMatch.Builder(team_number, match_number);
-                b.auto_staged_defense(row.get(hm.indexForUID("team" + station + "auto_staged_defense")));
-                b.auto_defense_action(row.get(hm.indexForUID("team" + station + "auto_defense_action")));
-                b.auto_attempted_score(row.get(hm.indexForUID("team" + station + "auto_score")));
-                b.auto_robot_crossed_midline(row.get(hm.indexForUID("team" + station + "auto_robot_crossed_midline")));
-                b.teleop_lowbar_cross_success(row.get(hm.indexForUID("team" + station + "lowbar_success")));
-                b.teleop_chevaldefrise_cross_success(row.get(hm.indexForUID("team" + station + "chevaldefrise_success")));
-                b.teleop_portcullis_cross_success(row.get(hm.indexForUID("team" + station + "portcullis_success")));
-                b.teleop_ramparts_cross_success(row.get(hm.indexForUID("team" + station + "ramparts_success")));
-                b.teleop_moat_cross_success(row.get(hm.indexForUID("team" + station + "moat_success")));
-                b.teleop_sallyport_cross_success(row.get(hm.indexForUID("team" + station + "sallyport_success")));
-                b.teleop_drawbridge_cross_success(row.get(hm.indexForUID("team" + station + "drawbridge_success")));
-                b.teleop_roughterrain_cross_success(row.get(hm.indexForUID("team" + station + "roughterrain_success")));
-                b.teleop_rockwall_cross_success(row.get(hm.indexForUID("team" + station + "rockwall_success")));
-                b.teleop_balls_scored_low(row.get(hm.indexForUID("team" + station + "teleop_balls_scored_low")));
-                b.teleop_balls_scored_high(row.get(hm.indexForUID("team" + station + "teleop_balls_scored_high")));
-                b.teleop_endgame_action(row.get(hm.indexForUID("team" + station + "teleop_endgame_action")));
-                b.teleop_defense_quality(row.get(hm.indexForUID("team" + station + "teleop_defense_quality")));
-                b.comment(row.get(hm.indexForUID("team" + station + "comment")));
-
-                teamMatches.add(b.build());
-            }
+            teamMatches.add(b.build());
         }
 
         return teamMatches;
