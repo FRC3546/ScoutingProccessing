@@ -70,7 +70,7 @@ public class TeamMatch {
         return match_number;
     }
 
-    public String getScout_name() {
+    public String getScoutName() {
         return scout_name;
     }
 
@@ -86,7 +86,7 @@ public class TeamMatch {
         return auto_attempted_score_goal;
     }
 
-    public boolean isAutoScoreSuccessful() {
+    public boolean wasAutoScoreSuccessful() {
         return auto_score_successful;
     }
 

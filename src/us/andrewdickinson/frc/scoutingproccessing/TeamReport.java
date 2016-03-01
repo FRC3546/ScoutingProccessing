@@ -110,7 +110,7 @@ public class TeamReport {
         int total = 0;
         for(TeamMatch teamMatch : team.getTeamMatches()){
             if (teamMatch.getAutoAttemptedScoreGoal() == Goal.High &&
-                    teamMatch.isAutoScoreSuccessful()){
+                    teamMatch.wasAutoScoreSuccessful()){
                 total += 1;
             }
         }
@@ -137,7 +137,7 @@ public class TeamReport {
         int total = 0;
         for(TeamMatch teamMatch : team.getTeamMatches()){
             if (teamMatch.getAutoAttemptedScoreGoal() == Goal.Low &&
-                    teamMatch.isAutoScoreSuccessful()){
+                    teamMatch.wasAutoScoreSuccessful()){
                 total += 1;
             }
         }

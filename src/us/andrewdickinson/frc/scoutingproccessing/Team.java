@@ -133,7 +133,7 @@ public class Team {
         return claim_teleop_scale;
     }
 
-    public boolean rotatesDrivers() {
+    public boolean getRotatesDrivers() {
         return rotatesDrivers;
     }
 
