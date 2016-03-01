@@ -17,7 +17,6 @@ public class HeaderManagement {
     }
 
     public void addSheetHeaders(ArrayList<String> sheet_headers){
-        if (this.sheet_headers != null) throw new IllegalStateException();
         this.sheet_headers = sheet_headers;
     }
 
