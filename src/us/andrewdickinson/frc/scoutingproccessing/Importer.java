@@ -54,6 +54,7 @@ public class Importer {
             }
 
             Team.Builder b = new Team.Builder(team_number);
+            b.scout_name(row.get(hm.indexForUID("scout_name")));
             b.drivetrain(row.get(hm.indexForUID("drivetrain")));
             b.ground_clearance(row.get(hm.indexForUID("ground_clearance")));
             b.auto_claims(row.get((hm.indexForUID("autonomous_claims"))));
@@ -99,6 +100,7 @@ public class Importer {
             int team_number = Double.valueOf(row.get(hm.indexForUID("team_number"))).intValue();
 
             TeamMatch.Builder b = new TeamMatch.Builder(team_number, match_number);
+            b.scout_name(row.get(hm.indexForUID("scout_name")));
             b.auto_staged_defense(row.get(hm.indexForUID("auto_staged_defense")));
             b.auto_defense_action(row.get(hm.indexForUID("auto_defense_action")));
             b.auto_attempted_score(row.get(hm.indexForUID("auto_score")));
@@ -114,8 +116,10 @@ public class Importer {
             b.teleop_rockwall_cross_success(row.get(hm.indexForUID("rockwall_success")));
             b.teleop_balls_scored_low(row.get(hm.indexForUID("teleop_balls_scored_low")));
             b.teleop_balls_scored_high(row.get(hm.indexForUID("teleop_balls_scored_high")));
+            b.scoringSuccess(row.get(hm.indexForUID("teleop_scoring_success")));
             b.teleop_endgame_action(row.get(hm.indexForUID("teleop_endgame_action")));
             b.teleop_defense_quality(row.get(hm.indexForUID("teleop_defense_quality")));
+            b.drivingCoordination(row.get(hm.indexForUID("teleop_driving_coordination")));
             b.comment(row.get(hm.indexForUID("comment")));
 
             teamMatches.add(b.build());

@@ -10,6 +10,7 @@ import java.util.Map;
 public class TeamMatch {
     private int team_number;
     private int match_number;
+    private String scout_name;
 
     // Autonomous
     /* The defense that the robot was staged in front of for auto. null = none */
@@ -30,10 +31,14 @@ public class TeamMatch {
     private int teleop_balls_scored_low;
     /* The number of balls the robot scored in the high goal */
     private int teleop_balls_scored_high;
+    /* Represents the overall scoring quality for this team this match */
+    private ScoringSuccess scoringQuality;
     /* Represents the action taken by the robot in the endgame */
     private EndgameAction teleop_endgame_action;
     /* Represents the robot's quality of playing defense. null = did not play defense */
     private Quality teleop_defense_quality;
+    /* Represents the overall driving coordination this match*/
+    private DrivingCoordination drivingCoordination;
 
     //Commentary
     private String comment;
@@ -41,6 +46,7 @@ public class TeamMatch {
     private TeamMatch(Builder b) {
         this.team_number = b.team_number;
         this.match_number = b.match_number;
+        this.scout_name = b.scout_name;
         this.auto_staged_defense = b.auto_staged_defense;
         this.auto_defense_action = b.auto_defense_action;
         this.auto_attempted_score_goal = b.auto_attempted_score_goal;
@@ -49,8 +55,10 @@ public class TeamMatch {
         this.teleop_defense_success = b.teleop_defense_success;
         this.teleop_balls_scored_low = b.teleop_balls_scored_low;
         this.teleop_balls_scored_high = b.teleop_balls_scored_high;
+        this.scoringQuality = b.scoringQuality;
         this.teleop_endgame_action = b.teleop_endgame_action;
         this.teleop_defense_quality = b.teleop_defense_quality;
+        this.drivingCoordination = b.drivingCoordination;
         this.comment = b.comment;
     }
 
@@ -60,6 +68,10 @@ public class TeamMatch {
 
     public int getMatchNumber() {
         return match_number;
+    }
+
+    public String getScout_name() {
+        return scout_name;
     }
 
     public Defense getAutoStagedDefense() {
@@ -102,6 +114,14 @@ public class TeamMatch {
         return teleop_defense_quality;
     }
 
+    public DrivingCoordination getDrivingCoordination() {
+        return drivingCoordination;
+    }
+
+    public ScoringSuccess getScoringQuality() {
+        return scoringQuality;
+    }
+
     public String getComment() {
         return comment;
     }
@@ -109,6 +129,7 @@ public class TeamMatch {
     public static class Builder {
         private Integer team_number;
         private Integer match_number;
+        private String scout_name;
         private Defense auto_staged_defense;
         private AutonomousCrossAction auto_defense_action;
         private Goal auto_attempted_score_goal;
@@ -119,12 +140,19 @@ public class TeamMatch {
         private Integer teleop_balls_scored_high;
         private EndgameAction teleop_endgame_action;
         private Quality teleop_defense_quality;
+        private ScoringSuccess scoringQuality;
+        private DrivingCoordination drivingCoordination;
         private String comment;
 
         public Builder(int team_number, int match_number) {
             this.team_number = team_number;
             this.match_number = match_number;
             teleop_defense_success = new HashMap<>();
+        }
+
+        public Builder scout_name(String scout_name){
+            this.scout_name = scout_name;
+            return this;
         }
 
         public Builder auto_staged_defense(String auto_staged_defense) {
@@ -265,6 +293,18 @@ public class TeamMatch {
             return this;
         }
 
+        public Builder drivingCoordination(String driving_coordination){
+            this.drivingCoordination = DataDefinitions.getInstance()
+                    .getCoordinationDefinition().get(driving_coordination);
+            return this;
+        }
+
+        public Builder scoringSuccess(String scoring_success){
+            this.scoringQuality = DataDefinitions.getInstance()
+                    .getScoringSuccessDefinition().get(scoring_success);
+            return this;
+        }
+
         public Builder comment(String comment) {
             this.comment = comment;
             return this;
@@ -273,6 +313,7 @@ public class TeamMatch {
         public TeamMatch build(){
             //Those that are allowed to be null are removed here
             boolean complete = this.team_number != null &&
+                this.scout_name != null &&
                 this.match_number != null &&
                 this.auto_defense_action != null &&
                 this.auto_score_successful != null &&
@@ -281,6 +322,7 @@ public class TeamMatch {
                 this.teleop_balls_scored_low != null &&
                 this.teleop_balls_scored_high != null &&
                 this.teleop_endgame_action != null &&
+                this.drivingCoordination != null &&
                 this.comment != null;
 
             if (complete){

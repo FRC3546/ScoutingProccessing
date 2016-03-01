@@ -15,6 +15,8 @@ public class DataDefinitions {
     private HashMap<String, Alliance> allianceDefinition = new HashMap<>();
     private HashMap<String, Defense> defenseDefinition = new HashMap<>();
     private HashMap<String, Quality> qualityDefinition = new HashMap<>();
+    private HashMap<String, ScoringSuccess> scoringSuccessDefinition = new HashMap<>();
+    private HashMap<String, DrivingCoordination> coordinationDefinition = new HashMap<>();
     private HashMap<String, DriverExperience> driverExperienceDefinition = new HashMap<>();
     private HashMap<String, EndgameAction> endgameActionDefinition = new HashMap<>();
     private HashMap<String, AutonomousCrossAction> autoCrossDefinition = new HashMap<>();
@@ -24,6 +26,7 @@ public class DataDefinitions {
         instance = new DataDefinitions();
 
         instance.pitScoutingHeaders.addHeader("team_number", "Team Number");
+        instance.matchScoutingHeaders.addHeader("scout_name", "Who scouted this robot?");
         instance.pitScoutingHeaders.addHeader("drivetrain", "Drivetrain");
         instance.pitScoutingHeaders.addHeader("ground_clearance", "Ground Clearance (inches)");
         instance.pitScoutingHeaders.addHeader("autonomous_claims", "Autonomous Mode. Can they...");
@@ -44,6 +47,7 @@ public class DataDefinitions {
 
         instance.matchScoutingHeaders.addHeader("matchnum", "Match Number (i.e. \"3\" or \"27\")");
         instance.matchScoutingHeaders.addHeader("team_number", "Team Number");
+        instance.matchScoutingHeaders.addHeader("scout_name", "Who scouted this robot?");
         instance.matchScoutingHeaders.addHeader("auto_staged_defense", "Staged In Front of Defense");
         instance.matchScoutingHeaders.addHeader("auto_defense_action", "Action (with respect to the above defense)");
         instance.matchScoutingHeaders.addHeader("auto_robot_crossed_midline", "Robot Crossed line to opposite side of the field - Incurring a foul (Should be Rare)");
@@ -59,8 +63,10 @@ public class DataDefinitions {
         instance.matchScoutingHeaders.addHeader("rockwall_success", "Defenses [Rock Wall]");
         instance.matchScoutingHeaders.addHeader("teleop_balls_scored_low", "Balls Scored (Low)");
         instance.matchScoutingHeaders.addHeader("teleop_balls_scored_high", "Balls Scored (High)");
+        instance.matchScoutingHeaders.addHeader("teleop_scoring_success", "Scoring success (high and low goals combined). The robot...");
         instance.matchScoutingHeaders.addHeader("teleop_endgame_action", "Endgame");
         instance.matchScoutingHeaders.addHeader("teleop_defense_quality", "Defense");
+        instance.matchScoutingHeaders.addHeader("teleop_driving_coordination", "Driving Coordination");
         instance.matchScoutingHeaders.addHeader("comment", "Comments (Optional)");
         
 
@@ -101,6 +107,18 @@ public class DataDefinitions {
         instance.autoCrossDefinition.put("Did nothing related to the defense", AutonomousCrossAction.Nothing);
         instance.autoCrossDefinition.put("Reached the defense", AutonomousCrossAction.Reach);
         instance.autoCrossDefinition.put("Crossed the defense", AutonomousCrossAction.Cross);
+
+        instance.scoringSuccessDefinition.put("Didn't try to score boulders", null);
+        instance.scoringSuccessDefinition.put("Often Missed", ScoringSuccess.OftenMissed);
+        instance.scoringSuccessDefinition.put("Missed Sometimes", ScoringSuccess.MissedSometimes);
+        instance.scoringSuccessDefinition.put("Hardly Missed", ScoringSuccess.HardlyMissed);
+        instance.scoringSuccessDefinition.put("Never Missed", ScoringSuccess.NeverMissed);
+
+        instance.coordinationDefinition.put("The robot moved smoothly, executing clearly planned maneuvers", DrivingCoordination.Smooth);
+        instance.coordinationDefinition.put("The robot moved in a regular way, executing a plan", DrivingCoordination.Regular);
+        instance.coordinationDefinition.put("The robot moved in an erratic way, its moves seemed kinda planned", DrivingCoordination.Erratic);
+        instance.coordinationDefinition.put("The robot stumbled across the field, with no clear plan", DrivingCoordination.Stumbling);
+        instance.coordinationDefinition.put("The robot was incapacitated in one way or another and didn't move much", DrivingCoordination.Incapacitated);
 
         instance.driverExperienceDefinition.put(DriverClaims.firstYear, DriverExperience.FirstYear);
         instance.driverExperienceDefinition.put(DriverClaims.secondYear, DriverExperience.SecondYear);
@@ -192,6 +210,14 @@ public class DataDefinitions {
 
     public HashMap<String, Quality> getQualityDefinition() {
         return qualityDefinition;
+    }
+
+    public HashMap<String, ScoringSuccess> getScoringSuccessDefinition() {
+        return scoringSuccessDefinition;
+    }
+
+    public HashMap<String, DrivingCoordination> getCoordinationDefinition() {
+        return coordinationDefinition;
     }
 
     public HashMap<String, DriverExperience> getDriverExperienceDefinition() {

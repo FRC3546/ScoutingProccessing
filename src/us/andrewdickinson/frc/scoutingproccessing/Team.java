@@ -12,6 +12,7 @@ public class Team {
 
     //Pit Scouting info
     private String drivetrain;
+    private String pit_scout_name;
     private double ground_clearance;
     private String comment;
 
@@ -35,6 +36,7 @@ public class Team {
 
     private Team(Builder b) {
         this.team_number = b.team_number;
+        this.pit_scout_name = b.pit_scout_name;
         this.match_data = new ArrayList<>();
         this.drivetrain = b.drivetrain;
         this.ground_clearance = b.ground_clearance;
@@ -61,6 +63,10 @@ public class Team {
 
     public int getTeamNumber() {
         return team_number;
+    }
+
+    public String getPitScoutName() {
+        return pit_scout_name;
     }
 
     public ArrayList<TeamMatch> getTeamMatches() {
@@ -137,6 +143,7 @@ public class Team {
 
     public static class Builder {
         private int team_number;
+        private String pit_scout_name;
         private String drivetrain;
         private Double ground_clearance;
         private String comment;
@@ -162,6 +169,11 @@ public class Team {
 
         public Builder(String team_number) {
             this(Double.valueOf(team_number).intValue());
+        }
+
+        public Builder scout_name(String scout_name){
+            this.pit_scout_name = scout_name;
+            return this;
         }
 
         public Builder drivetrain(String drivetrain) {
@@ -300,6 +312,7 @@ public class Team {
 
         public Team build(){
             boolean complete = this.drivetrain != null &&
+                this.pit_scout_name != null &&
                 this.ground_clearance != null &&
                 this.comment != null &&
                 this.claim_auto_score_high != null &&
