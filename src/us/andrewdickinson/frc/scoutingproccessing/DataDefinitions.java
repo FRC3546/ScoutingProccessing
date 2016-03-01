@@ -26,7 +26,7 @@ public class DataDefinitions {
         instance = new DataDefinitions();
 
         instance.pitScoutingHeaders.addHeader("team_number", "Team Number");
-        instance.matchScoutingHeaders.addHeader("scout_name", "Who scouted this robot?");
+        instance.pitScoutingHeaders.addHeader("scout_name", "Who scouted this robot?");
         instance.pitScoutingHeaders.addHeader("drivetrain", "Drivetrain");
         instance.pitScoutingHeaders.addHeader("ground_clearance", "Ground Clearance (inches)");
         instance.pitScoutingHeaders.addHeader("autonomous_claims", "Autonomous Mode. Can they...");
