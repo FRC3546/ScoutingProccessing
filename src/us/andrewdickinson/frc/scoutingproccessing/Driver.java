@@ -8,8 +8,6 @@ import java.util.*;
  */
 public class Driver {
     public static void main(String[] args) throws IOException {
-        HashMap<Integer, Team> teams = Importer
-                .importAllData("/home/Andrew/gdrive/Master_Spreadsheet/Master_Spreadsheet.xlsx");
 
     }
 }
