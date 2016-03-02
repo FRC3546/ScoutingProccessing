@@ -27,6 +27,7 @@ public class PDFGenerator {
     public PDFGenerator(String path, TeamReport teamReport) throws IOException, DocumentException {
         this.document = new Document();
         writer = PdfWriter.getInstance(document, new FileOutputStream(path));
+        writer.setMargins(0,0,0,0);
         document.open();
 
         this.teamReport = teamReport;
@@ -34,7 +35,7 @@ public class PDFGenerator {
 
     public void addHeader() throws DocumentException, IOException {
         int team_number = teamReport.getTeamNumber();
-        int rank = 24; //TODO: Automate
+        int rank = TBACommunication.getInstance().getRank(team_number);
         int matches = teamReport.getMatchesPlayed();
 
         addPhrase(Integer.toString(team_number), bold);
@@ -54,7 +55,7 @@ public class PDFGenerator {
 
         Image img = Image.getInstance("img.jpg");
         img.scaleToFit(150, 150);
-        img.setAbsolutePosition(400, 740);
+        img.setAbsolutePosition(400, 725);
 
         PdfContentByte canvas = writer.getDirectContentUnder();
         canvas.addImage(img);
@@ -64,10 +65,10 @@ public class PDFGenerator {
         table = new PdfPTable(new float[]{2.9f,1.26f,3.906f});
 
         table.setWidthPercentage(100);
-        table.setSpacingBefore(0f);
+        table.setSpacingBefore(10f);
         table.setSpacingAfter(0f);
 
-        addRow(new String[]{"Task","Claim","Data"});
+        addRow(new String[]{"Task", "Claim", "Data"});
     }
 
     public void finishTable() throws DocumentException {
@@ -84,7 +85,10 @@ public class PDFGenerator {
     }
 
     private void addTextLine(String text, Font f) throws DocumentException{
-        document.add(new Phrase("\n" + text, f));
+        Paragraph p = new Paragraph(text, f);
+        p.setSpacingBefore(0);
+        p.setSpacingAfter(0);
+        document.add(p);
     }
 
     public void addRow(ReportRow reportRow){

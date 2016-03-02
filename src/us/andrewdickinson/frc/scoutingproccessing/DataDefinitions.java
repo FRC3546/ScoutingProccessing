@@ -172,8 +172,10 @@ public class DataDefinitions {
         public static final String eventCodeDelimiter = "<CODE>";
         public static final String matches_url =
                 "http://www.thebluealliance.com/api/v2/event/" + eventCodeDelimiter + "/matches";
+        public static final String rankings_url =
+                "http://www.thebluealliance.com/api/v2/event/" + eventCodeDelimiter + "/rankings";
         public static final String tbaAppIdHeaderName = "X-TBA-App-Id";
-        public static final String tbaAppId = "frc3546:scouting2016:v0.1";
+        public static final String tbaAppId = "frc3546:scouting2016:v0.2";
         public static final String eventCode = "2016scmb";
 
     }

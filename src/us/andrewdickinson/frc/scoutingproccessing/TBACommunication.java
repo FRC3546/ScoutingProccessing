@@ -19,6 +19,7 @@ public class TBACommunication {
     private static TBACommunication instance = new TBACommunication(DataDefinitions.TBAConnection.eventCode);
     private String eventCode;
     private JSONArray matches;
+    private JSONArray ranks;
 
     public static TBACommunication getInstance() {
         return instance;
@@ -28,9 +29,20 @@ public class TBACommunication {
         this.eventCode = eventCode;
         try {
             getMatches();
+            getRankings();
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public int getRank(int team){
+        for (int i = 0; i < ranks.length(); i++){
+            if (ranks.getJSONArray(i).getString(1).equals(Integer.toString(team))){
+                return Integer.parseInt(ranks.getJSONArray(i).getString(0));
+            }
+        }
+
+        throw new IllegalArgumentException("Team not found");
     }
 
     /**
@@ -132,6 +144,39 @@ public class TBACommunication {
             }
 
             this.matches = matches;
+        } catch (ClientProtocolException e){
+            throw new IOException();
+        } finally {
+            if (res != null) res.close();
+        }
+    }
+
+    private void getRankings() throws IOException{
+        String url = DataDefinitions.TBAConnection.rankings_url
+                .replace(DataDefinitions.TBAConnection.eventCodeDelimiter, eventCode);
+
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        HttpGet httpGet = new HttpGet(url);
+        httpGet.addHeader(DataDefinitions.TBAConnection.tbaAppIdHeaderName,
+                DataDefinitions.TBAConnection.tbaAppId);
+
+        CloseableHttpResponse res = null;
+        try {
+            res = httpClient.execute(httpGet);
+
+            BufferedReader rd = new BufferedReader
+                    (new InputStreamReader(res.getEntity().getContent()));
+
+            String response = "";
+            String line;
+            while ((line = rd.readLine()) != null) {
+                response += line;
+            }
+
+            JSONArray ranks = new JSONArray(response);
+
+            this.ranks = ranks;
         } catch (ClientProtocolException e){
             throw new IOException();
         } finally {
