@@ -1,5 +1,8 @@
 package us.andrewdickinson.frc.scoutingproccessing;
 
+import com.itextpdf.text.DocumentException;
+
+import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -16,7 +19,13 @@ public class TeamReport {
     private Team team;
 
     public TeamReport(Team team) {
+        if (team == null) throw new IllegalArgumentException();
         this.team = team;
+    }
+
+    public void generatePDF(String path) throws IOException, DocumentException {
+        ReportGenerator rg = new ReportGenerator(this, path);
+        rg.generate();
     }
 
     public int getTeamNumber(){

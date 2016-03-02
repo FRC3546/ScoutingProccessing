@@ -1,9 +1,15 @@
 package us.andrewdickinson.frc.scoutingproccessing;
 
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfCopy;
+import com.itextpdf.text.pdf.PdfReader;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -12,10 +18,12 @@ import java.util.HashMap;
 public class ReportGenerator {
     private PDFGenerator pdfGenerator;
     private TeamReport teamReport;
+    private String path;
 
     public ReportGenerator(TeamReport tr, String path) throws DocumentException, IOException{
         this.teamReport = tr;
-        pdfGenerator = new PDFGenerator(path, tr);
+        this.path = path + teamReport.getTeamNumber() + ".pdf";
+        pdfGenerator = new PDFGenerator(this.path, tr);
         pdfGenerator.addHeader();
     }
 
@@ -31,7 +39,7 @@ public class ReportGenerator {
         pdfGenerator.addRow(new ReportRow(taskDescription, cross_claim != CrossCapability.NotAble, cross_claim.name(), data, true));
     }
 
-    public void generate() throws DocumentException{
+    public void generate() throws IOException, DocumentException{
         pdfGenerator.startTable();
         addTask("Reach Defense (Auto)", teamReport.getClaimAutoCanReachDefense(), teamReport.getReachedDefenseSummary());
         addTask("Low Bar (Auto)", teamReport.getClaimAutoCanCrossLowBar(), teamReport.getAutoLowBarSummary());
@@ -80,5 +88,23 @@ public class ReportGenerator {
         pdfGenerator.finishTable();
         pdfGenerator.addFooter();
         pdfGenerator.export();
+    }
+
+    public static void mergeAndSortTeams(String path, String out, ArrayList<Integer> teams) throws IOException, DocumentException{
+        teams.sort(Integer::compare);
+        mergeTeams(path, out, teams);
+    }
+
+    public static void mergeTeams(String path, String out, ArrayList<Integer> teams) throws IOException, DocumentException {
+        Document document = new Document();
+        PdfCopy copy = new PdfCopy(document, new FileOutputStream(out));
+        document.open();
+        for (Integer team : teams){
+            PdfReader this_page = new PdfReader(path + team + ".pdf");
+            copy.addDocument(this_page);
+            this_page.close();
+        }
+
+        document.close();
     }
 }
