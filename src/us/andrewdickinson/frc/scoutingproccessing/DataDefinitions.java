@@ -1,6 +1,5 @@
 package us.andrewdickinson.frc.scoutingproccessing;
 
-import java.sql.*;
 import java.util.HashMap;
 
 /**
@@ -120,10 +119,10 @@ public class DataDefinitions {
         instance.coordinationDefinition.put("The robot stumbled across the field, with no clear plan", DrivingCoordination.Stumbling);
         instance.coordinationDefinition.put("The robot was incapacitated in one way or another and didn't move much", DrivingCoordination.Incapacitated);
 
-        instance.driverExperienceDefinition.put(DriverClaims.firstYear, DriverExperience.FirstYear);
-        instance.driverExperienceDefinition.put(DriverClaims.secondYear, DriverExperience.SecondYear);
-        instance.driverExperienceDefinition.put(DriverClaims.thirdYear, DriverExperience.ThirdYear);
-        instance.driverExperienceDefinition.put(DriverClaims.fourthYear, DriverExperience.FourthYear);
+        instance.driverExperienceDefinition.put(DriverClaims.firstYear, DriverExperience.First_Year);
+        instance.driverExperienceDefinition.put(DriverClaims.secondYear, DriverExperience.Second_Year);
+        instance.driverExperienceDefinition.put(DriverClaims.thirdYear, DriverExperience.Third_Year);
+        instance.driverExperienceDefinition.put(DriverClaims.fourthYear, DriverExperience.Fourth_Year);
     }
 
     public class SheetNames {

@@ -50,7 +50,7 @@ public class Tests {
             assertTrue(t.getClaimTeleopChallenge());
 
             assertTrue(t.getRotatesDrivers());
-            assertEquals(DriverExperience.ThirdYear, t.getDriverExperienceLevel());
+            assertEquals(DriverExperience.Third_Year, t.getDriverExperienceLevel());
 
             assertEquals("", t.getComment());
 
