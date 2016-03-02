@@ -27,6 +27,14 @@ public class SuccessTable<Task extends Enum, Rating extends Enum> {
         }
     }
 
+    public void removeRating(Rating rating){
+        successTable.forEach((task, ratingIntegerHashMap) -> ratingIntegerHashMap.remove(rating));
+    }
+
+    public HashMap<Rating, Integer> getFrequencyMap(Task task){
+        return successTable.get(task);
+    }
+
     public int getEntry(Task task, Rating rating){
         return successTable.get(task).get(rating);
     }
