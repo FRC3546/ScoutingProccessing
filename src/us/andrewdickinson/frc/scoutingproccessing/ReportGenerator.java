@@ -9,38 +9,37 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 
 /**
  * Created by Andrew on 3/1/16.
  */
 public class ReportGenerator {
-    private PDFGenerator pdfGenerator;
+    private TeamPDFGenerator teamPdfGenerator;
     private TeamReport teamReport;
     private String path;
 
     public ReportGenerator(TeamReport tr, String path) throws DocumentException, IOException{
         this.teamReport = tr;
         this.path = path + teamReport.getTeamNumber() + ".pdf";
-        pdfGenerator = new PDFGenerator(this.path, tr);
-        pdfGenerator.addHeader();
+        teamPdfGenerator = new TeamPDFGenerator(this.path, tr);
+        teamPdfGenerator.addHeader();
     }
 
     public void addTask(String taskDescription, boolean claim){
-        pdfGenerator.addRow(new ReportRow(taskDescription, claim, "N/A"));
+        teamPdfGenerator.addRow(new ReportRow(taskDescription, claim, "N/A"));
     }
 
     public void addTask(String taskDescription, boolean claim, String data){
-        pdfGenerator.addRow(new ReportRow(taskDescription, claim, data));
+        teamPdfGenerator.addRow(new ReportRow(taskDescription, claim, data));
     }
 
     public void addTask(String taskDescription, CrossCapability cross_claim, String data){
-        pdfGenerator.addRow(new ReportRow(taskDescription, cross_claim != CrossCapability.NotAble, cross_claim.name(), data, true));
+        teamPdfGenerator.addRow(new ReportRow(taskDescription, cross_claim != CrossCapability.NotAble, cross_claim.name(), data, true));
     }
 
     public void generate() throws IOException, DocumentException{
-        pdfGenerator.startTable();
+        teamPdfGenerator.startTable();
         addTask("Reach Defense (Auto)", teamReport.getClaimAutoCanReachDefense(), teamReport.getReachedDefenseSummary());
         addTask("Low Bar (Auto)", teamReport.getClaimAutoCanCrossLowBar(), teamReport.getAutoLowBarSummary());
         addTask("Cross Other Defenses (Auto)", teamReport.getClaimAutoCanCrossOtherDefenses(), teamReport.getAutoCrossedDefenseSummary());
@@ -69,7 +68,7 @@ public class ReportGenerator {
         addTask("Can Scale?", teamReport.getClaimTeleopEndgameCanScale(), teamReport.getScaleSummary());
 
         addTask("Rotates Drivers?", teamReport.getClaimRotatesDrivers());
-        pdfGenerator.addRow(new ReportRow(
+        teamPdfGenerator.addRow(new ReportRow(
                 "Driver Experience",
                 true,
                 teamReport.getClaimDriverExperience().name().replace("_", " "),
@@ -77,7 +76,7 @@ public class ReportGenerator {
                 false
         ));
 
-        pdfGenerator.addRow(new ReportRow(
+        teamPdfGenerator.addRow(new ReportRow(
                 "Plays Defense Well?",
                 false,
                 "N/A",
@@ -85,9 +84,9 @@ public class ReportGenerator {
                 false
         ));
 
-        pdfGenerator.finishTable();
-        pdfGenerator.addFooter();
-        pdfGenerator.export();
+        teamPdfGenerator.finishTable();
+        teamPdfGenerator.addFooter();
+        teamPdfGenerator.export();
     }
 
     public static void mergeAndSortTeams(String path, String out, ArrayList<Integer> teams) throws IOException, DocumentException{

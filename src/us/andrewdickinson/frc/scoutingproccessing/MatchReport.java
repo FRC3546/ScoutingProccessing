@@ -1,7 +1,11 @@
 package us.andrewdickinson.frc.scoutingproccessing;
 
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfCopy;
+import com.itextpdf.text.pdf.PdfReader;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,6 +23,7 @@ public class MatchReport {
     public MatchReport(HashMap<Integer, Team> allTeams, int match){
         this.match = match;
         TBACommunication tbaCommunication = TBACommunication.getInstance();
+        if (!tbaCommunication.scheduleGenerated()) throw new IllegalStateException("Match schedule not generated yet. Query is meaningless");
         int[] redTeams = tbaCommunication.getRedTeams(match);
         int[] blueTeams = tbaCommunication.getBlueTeams(match);
 
@@ -34,7 +39,43 @@ public class MatchReport {
         }
     }
 
-    public void generateMatchPDF() throws IOException, DocumentException{
+    public int getMatch() {
+        return match;
+    }
+
+    public void generateMatchPDF() throws  IOException, DocumentException {
+        MatchPDFGenerator generatorRed = new MatchPDFGenerator("reports/matchsum/" + match + "_red.pdf", this, Alliance.Red);
+        for (TeamReport teamReport : redTeams){
+            generatorRed.addTeam(teamReport);
+        }
+
+        generatorRed.addLogo();
+        generatorRed.export();
+
+        MatchPDFGenerator generatorBlue = new MatchPDFGenerator("reports/matchsum/" + match + "_blue.pdf", this, Alliance.Blue);
+        for (TeamReport teamReport : blueTeams){
+            generatorBlue.addTeam(teamReport);
+        }
+
+        generatorBlue.addLogo();
+        generatorBlue.export();
+
+        Document document = new Document();
+        PdfCopy copy = new PdfCopy(document, new FileOutputStream("reports/matchsum/" + match + ".pdf"));
+        document.open();
+
+        PdfReader red = new PdfReader("reports/matchsum/" + match + "_red.pdf");
+        copy.addDocument(red);
+        red.close();
+
+        PdfReader blue = new PdfReader("reports/matchsum/" + match + "_blue.pdf");
+        copy.addDocument(blue);
+        blue.close();
+
+        document.close();
+    }
+
+    public void generateMatchTeamsPDF() throws IOException, DocumentException{
         for (TeamReport teamReport : redTeams) {
             teamReport.generatePDF("reports/team/");
         }

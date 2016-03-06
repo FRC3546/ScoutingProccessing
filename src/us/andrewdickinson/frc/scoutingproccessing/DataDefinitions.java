@@ -9,6 +9,7 @@ public class DataDefinitions {
     private static DataDefinitions instance;
     private HeaderManagement pitScoutingHeaders = new HeaderManagement();
     private HeaderManagement matchScoutingHeaders = new HeaderManagement();
+    private ReplacementTable matchReportReplacements = new ReplacementTable();
     private HashMap<String, CrossCapability> crossCapabilityHeaderDefinition = new HashMap<>();
     private HashMap<String, CrossAction> crossActionHeaderDefinition = new HashMap<>();
     private HashMap<String, Alliance> allianceDefinition = new HashMap<>();
@@ -123,6 +124,43 @@ public class DataDefinitions {
         instance.driverExperienceDefinition.put(DriverClaims.secondYear, DriverExperience.Second_Year);
         instance.driverExperienceDefinition.put(DriverClaims.thirdYear, DriverExperience.Third_Year);
         instance.driverExperienceDefinition.put(DriverClaims.fourthYear, DriverExperience.Fourth_Year);
+
+        instance.matchReportReplacements.addReplacement("Low Bar", "LB");
+        instance.matchReportReplacements.addReplacement("Cheval De Frise", "CdF");
+        instance.matchReportReplacements.addReplacement("Portcullis", "PC");
+        instance.matchReportReplacements.addReplacement("Ramparts", "Rmpp");
+        instance.matchReportReplacements.addReplacement("Moat", "Moat");
+        instance.matchReportReplacements.addReplacement("Sally Port", "SP");
+        instance.matchReportReplacements.addReplacement("Drawbridge", "Drwb");
+        instance.matchReportReplacements.addReplacement("Rough Terrain", "RT");
+        instance.matchReportReplacements.addReplacement("Rock Wall", "RckW");
+
+        instance.matchReportReplacements.addReplacement("Can't Cross", "Can't");
+        instance.matchReportReplacements.addReplacement("CrossSlowly", "Slow");
+        instance.matchReportReplacements.addReplacement("CrossSwiftly", "Swift");
+        instance.matchReportReplacements.addReplacement("Crosses", "Cross");
+
+        instance.matchReportReplacements.addReplacement("CrossedWell", "Well");
+        instance.matchReportReplacements.addReplacement("CrossedPoorly", "Poor");
+
+        instance.matchReportReplacements.addReplacement("Smooth", "Smth");
+        instance.matchReportReplacements.addReplacement("Regular", "Reg");
+        instance.matchReportReplacements.addReplacement("Erratic", "Erra");
+        instance.matchReportReplacements.addReplacement("Stumbling", "Stmbl");
+        instance.matchReportReplacements.addReplacement("Incapacitated", "Incap");
+
+        instance.matchReportReplacements.addReplacement("MissedOften", "OftenMiss");
+        instance.matchReportReplacements.addReplacement("HardlyMissed", "HardlyMiss");
+        instance.matchReportReplacements.addReplacement("NeverMissed", "NeverMiss");
+        instance.matchReportReplacements.addReplacement("MissedSometimes", "Missed");
+
+        instance.matchReportReplacements.addReplacement("total ", "");
+        instance.matchReportReplacements.addReplacement(" per match", "");
+        instance.matchReportReplacements.addReplacement(" time(s)", "");
+        instance.matchReportReplacements.addReplacement(" of the time", "");
+        instance.matchReportReplacements.addReplacement(" success", "");
+
+        instance.matchReportReplacements.addReplacement("Never Demonstrated", "ND");
     }
 
     public class SheetNames {
@@ -175,8 +213,8 @@ public class DataDefinitions {
         public static final String rankings_url =
                 "http://www.thebluealliance.com/api/v2/event/" + eventCodeDelimiter + "/rankings";
         public static final String tbaAppIdHeaderName = "X-TBA-App-Id";
-        public static final String tbaAppId = "frc3546:scouting2016:v0.2";
-        public static final String eventCode = "2016scmb";
+        public static final String tbaAppId = "frc3546:scouting2016:v1.0";
+        public static final String eventCode = "2016misjo";
 
     }
 
@@ -231,5 +269,9 @@ public class DataDefinitions {
 
     public HashMap<String, AutonomousCrossAction> getAutoCrossDefinition() {
         return autoCrossDefinition;
+    }
+
+    public ReplacementTable getMatchReportReplacements() {
+        return matchReportReplacements;
     }
 }

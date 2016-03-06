@@ -53,4 +53,8 @@ public class ReportRow {
     public boolean boldReport(){
         return !claimed && aboutADefense;
     }
+
+    public boolean isAboutADefense() {
+        return aboutADefense;
+    }
 }

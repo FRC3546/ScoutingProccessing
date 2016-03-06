@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Andrew on 3/1/16.
  */
-public class PDFGenerator {
+public class TeamPDFGenerator {
     private TeamReport teamReport;
     private Document document;
     private PdfWriter writer;
@@ -24,7 +24,7 @@ public class PDFGenerator {
     Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 11.0f, Font.BOLD);
     Font ital = new Font(Font.FontFamily.TIMES_ROMAN, 18.0f, Font.ITALIC);
 
-    public PDFGenerator(String path, TeamReport teamReport) throws IOException, DocumentException {
+    public TeamPDFGenerator(String path, TeamReport teamReport) throws IOException, DocumentException {
         this.document = new Document();
         writer = PdfWriter.getInstance(document, new FileOutputStream(path));
         writer.setMargins(0,0,0,0);

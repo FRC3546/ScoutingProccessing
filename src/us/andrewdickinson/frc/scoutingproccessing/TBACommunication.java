@@ -35,6 +35,10 @@ public class TBACommunication {
         }
     }
 
+    public boolean scheduleGenerated(){
+        return  matches.length() > 0;
+    }
+
     public int getRank(int team){
         for (int i = 0; i < ranks.length(); i++){
             if (ranks.getJSONArray(i).getString(1).equals(Integer.toString(team))){
@@ -42,7 +46,7 @@ public class TBACommunication {
             }
         }
 
-        throw new IllegalArgumentException("Team not found");
+        return 0;
     }
 
     /**
@@ -90,7 +94,7 @@ public class TBACommunication {
             }
         }
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Match number not found");
     }
 
     public int[] getBlueTeams(int match){
