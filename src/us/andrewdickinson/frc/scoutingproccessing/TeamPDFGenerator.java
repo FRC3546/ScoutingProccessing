@@ -2,10 +2,11 @@ package us.andrewdickinson.frc.scoutingproccessing;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import com.sun.deploy.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -53,7 +54,8 @@ public class TeamPDFGenerator {
             addTextLine("Crossed midline in matches: " + midLineCrossings, small);
         }
 
-        Image img = Image.getInstance("img.jpg");
+        URL url = Driver.class.getResource("img.jpg");
+        Image img = Image.getInstance(url);
         img.scaleToFit(150, 150);
         img.setAbsolutePosition(400, 725);
 

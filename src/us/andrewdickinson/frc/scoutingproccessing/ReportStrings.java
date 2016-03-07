@@ -1,8 +1,6 @@
 package us.andrewdickinson.frc.scoutingproccessing;
 
-import com.sun.deploy.util.StringUtils;
-import sun.plugin.navig.motif.OJIPlugin;
-
+import org.apache.commons.lang3.StringUtils;
 import java.util.*;
 
 /**

@@ -10,26 +10,32 @@ import java.util.*;
  */
 public class Driver {
     public static void main(String[] args) throws IOException, DocumentException {
-        HashMap<Integer, Team> teams = Importer
-                .importAllData("/home/Andrew/gdrive/Master_Spreadsheet/Master_Spreadsheet.xlsx");
-//        Team t = teams.get(4098);
-//        TeamReport tr = new TeamReport(t);
-//
-//        ReportGenerator rg = new ReportGenerator(tr, "reports/team/");
-//        rg.generate();
-//
-//        t = teams.get(2386);
-//        tr = new TeamReport(t);
-//
-//        rg = new ReportGenerator(tr, "reports/team/");
-//        rg.generate();
-//
-//        ArrayList<Integer> team_nums = new ArrayList<>();
-//        team_nums.add(4098);
-//        team_nums.add(2386);
-//        ReportGenerator.mergeTeams("reports/team/", team_nums);
+        HashMap<Integer, Team> teams = Importer.importAllData(args[0]);
 
-        MatchReport mr = new MatchReport(teams, 1);
-        mr.generateMatchPDF();
+        int path_index = Arrays.asList(args).indexOf("-o") + 1;
+        String path = "";
+        if (path_index != 0) {
+            path = args[path_index];
+        }
+
+        switch (args[1]){
+            case "team":
+                TeamReport tr = new TeamReport(teams.get(Integer.parseInt(args[2])));
+                ReportGenerator generator = new ReportGenerator(tr, path);
+                generator.generate();
+                break;
+            case "match":
+                MatchReport mr = new MatchReport(teams, Integer.parseInt(args[2]));
+                mr.generateMatchPDF(path);
+                break;
+            case "matchteams":
+                MatchReport mr2 = new MatchReport(teams, Integer.parseInt(args[2]));
+                mr2.generateMatchTeamsPDF(path);
+                break;
+            case "allteams":
+                //TODO: Implement
+                break;
+
+        }
     }
 }

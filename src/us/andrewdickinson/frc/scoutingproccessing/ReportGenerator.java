@@ -5,6 +5,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfReader;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class ReportGenerator {
     public ReportGenerator(TeamReport tr, String path) throws DocumentException, IOException{
         this.teamReport = tr;
         this.path = path + teamReport.getTeamNumber() + ".pdf";
+        if (path.contains(".pdf")) this.path = path;
         teamPdfGenerator = new TeamPDFGenerator(this.path, tr);
         teamPdfGenerator.addHeader();
     }
@@ -102,6 +104,8 @@ public class ReportGenerator {
             PdfReader this_page = new PdfReader(path + team + ".pdf");
             copy.addDocument(this_page);
             this_page.close();
+
+            new File(path + team + ".pdf").delete();
         }
 
         document.close();

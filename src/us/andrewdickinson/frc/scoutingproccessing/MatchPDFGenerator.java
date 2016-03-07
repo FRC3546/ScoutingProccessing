@@ -2,10 +2,12 @@ package us.andrewdickinson.frc.scoutingproccessing;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import com.sun.deploy.util.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -41,7 +43,8 @@ public class MatchPDFGenerator {
     }
 
     public void addLogo() throws IOException, DocumentException{
-        Image img = Image.getInstance("img.jpg");
+        URL url = Driver.class.getResource("img.jpg");
+        Image img = Image.getInstance(url);
         img.scaleToFit(110, 110);
         img.setAbsolutePosition(625, 535);
 //        img.scaleToFit(600, 500);
