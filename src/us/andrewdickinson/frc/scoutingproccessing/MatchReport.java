@@ -24,7 +24,7 @@ public class MatchReport {
     ArrayList<TeamReport> redTeams;
     ArrayList<TeamReport> blueTeams;
 
-    public MatchReport(HashMap<Integer, Team> allTeams, int match){
+    public MatchReport(TreeMap<Integer, Team> allTeams, int match){
         this.match = match;
         TBACommunication tbaCommunication = TBACommunication.getInstance();
         if (!tbaCommunication.scheduleGenerated()) throw new IllegalStateException("Match schedule not generated yet. Query is meaningless");

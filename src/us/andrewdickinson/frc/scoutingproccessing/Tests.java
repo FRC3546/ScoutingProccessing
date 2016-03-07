@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import static org.junit.Assert.*;
 
@@ -14,7 +15,7 @@ public class Tests {
     @Test
     public void testTeamEverything(){
         try {
-            HashMap<Integer, Team> teams = Importer
+            TreeMap<Integer, Team> teams = Importer
                     .importAllData("/home/Andrew/gdrive/Master_Spreadsheet/Master_Spreadsheet.xlsx");
             Team t = teams.get(4098);
             assertEquals("Andrew D.", t.getPitScoutName());
@@ -62,7 +63,7 @@ public class Tests {
     @Test
     public void testTeamMatchEverything(){
         try {
-            HashMap<Integer, Team> teams = Importer
+            TreeMap<Integer, Team> teams = Importer
                     .importAllData("/home/Andrew/gdrive/Master_Spreadsheet/Master_Spreadsheet.xlsx");
             TeamMatch tm = teams.get(4098).getTeamMatches().get(0);
             assertEquals("Andrew D.", tm.getScoutName());

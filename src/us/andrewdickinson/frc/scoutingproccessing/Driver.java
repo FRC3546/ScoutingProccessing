@@ -2,15 +2,18 @@ package us.andrewdickinson.frc.scoutingproccessing;
 
 import com.itextpdf.text.DocumentException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Created by Andrew on 2/28/16.
  */
 public class Driver {
     public static void main(String[] args) throws IOException, DocumentException {
-        HashMap<Integer, Team> teams = Importer.importAllData(args[0]);
+        TreeMap<Integer, Team> teams = Importer.importAllData(args[0]);
 
         int path_index = Arrays.asList(args).indexOf("-o") + 1;
         String path = "";
@@ -33,9 +36,22 @@ public class Driver {
                 mr2.generateMatchTeamsPDF(path);
                 break;
             case "allteams":
-                //TODO: Implement
-                break;
+                String outputPath = path + "allteams.pdf";
+                String directory = path;
 
+                if (path.contains(".pdf")){
+                    outputPath = path;
+                    directory = new File(path).getAbsoluteFile().getParentFile().getAbsolutePath();
+                }
+
+                for (Team team : teams.values()) {
+                    new TeamReport(team).generatePDF(directory);
+                }
+
+                List<Integer> teamNumbers = teams.keySet().stream().collect(Collectors.toList());
+
+                ReportGenerator.mergeTeams(directory, outputPath, new ArrayList<>(teamNumbers));
+                break;
         }
     }
 }

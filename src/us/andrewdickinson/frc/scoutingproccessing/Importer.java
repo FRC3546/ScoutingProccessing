@@ -7,15 +7,16 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * Created by Andrew on 2/28/16.
  */
 public class Importer {
-    public static HashMap<Integer, Team> importAllData(String xlsxFilePath) throws IOException{
+    public static TreeMap<Integer, Team> importAllData(String xlsxFilePath) throws IOException{
         ArrayList<Team> teams = importTeams(xlsxFilePath);
 
-        HashMap<Integer, Team> teamHashMap = new HashMap<>();
+        TreeMap<Integer, Team> teamHashMap = new TreeMap<>();
         for (Team team : teams){
             teamHashMap.put(team.getTeamNumber(), team);
         }
