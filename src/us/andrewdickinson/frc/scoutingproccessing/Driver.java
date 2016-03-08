@@ -1,6 +1,7 @@
 package us.andrewdickinson.frc.scoutingproccessing;
 
 import com.itextpdf.text.DocumentException;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class Driver {
             path = args[path_index];
         }
 
-        switch (args[1]){
+        switch (args[1]) {
             case "team":
                 TeamReport tr = new TeamReport(teams.get(Integer.parseInt(args[2])));
                 ReportGenerator generator = new ReportGenerator(tr, path);
@@ -39,7 +40,7 @@ public class Driver {
                 String outputPath = path + "allteams.pdf";
                 String directory = path;
 
-                if (path.contains(".pdf")){
+                if (path.contains(".pdf")) {
                     outputPath = path;
                     directory = new File(path).getAbsoluteFile().getParentFile().getAbsolutePath();
                 }

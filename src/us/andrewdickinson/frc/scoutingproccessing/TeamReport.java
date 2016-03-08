@@ -19,7 +19,7 @@ public class TeamReport {
     private Team team;
 
     public TeamReport(Team team) {
-        if (team == null) throw new IllegalArgumentException();
+        if (team == null) throw new IllegalArgumentException("Team is null");
         this.team = team;
     }
 
