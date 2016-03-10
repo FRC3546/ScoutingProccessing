@@ -31,6 +31,7 @@ public class ScoutingSchedule {
                 match_reduced[i] = matchList.remove(team);
             }
             scoutingMatches.add(match_reduced);
+//            scoutingMatches.add(Arrays.copyOfRange(match, 0, 4));
         }
     }
 
@@ -99,7 +100,7 @@ public class ScoutingSchedule {
 
     public Map<Integer, Integer> getFrequencyMap(){
         Map<Integer, Integer> numberOfMatchesDistribution = new HashMap<>(45);
-        for (int[] match : matches){
+        for (int[] match : scoutingMatches){
             for (int team : match){
                 if (numberOfMatchesDistribution.containsKey(team)){
                     numberOfMatchesDistribution.put(team, numberOfMatchesDistribution.get(team) + 1);

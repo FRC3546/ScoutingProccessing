@@ -18,9 +18,14 @@ public class ScheduleGenerator {
         scoutingSchedule = new ScoutingSchedule(tba);
     }
 
-    public void generate(){
-        for (int i = 0; i < 10000; i++) {
-            runRound();
+    public void generate(double max_score_allowed){
+        int j = 1;
+        while (scoutingSchedule.getScore() > max_score_allowed){
+            System.out.println("Generating schedule... " + "(Round " + j + ")");
+            for (int i = 0; i < 1000; i++) {
+                runRound();
+            }
+            j++;
         }
     }
 
@@ -44,7 +49,7 @@ public class ScheduleGenerator {
                         }
 
                         double loop_score = scoutingSchedule.getScore();
-                        if (loop_score <= original_score
+                        if (loop_score < original_score
                                 || randomMapDeltaToKeep(loop_score - original_score)){
                                     original_score = loop_score;
                         } else {
@@ -59,7 +64,7 @@ public class ScheduleGenerator {
     }
 
     public boolean randomMapDeltaToKeep(double delta){
-        double probability = Math.pow(Math.E, (-500 * Math.abs(delta) - 1));
+        double probability = Math.pow(Math.E, (-100 * Math.abs(delta) - 1));
         if (RANDOM_ANEALING_ENABLED){
             return Math.random() < probability;
         } else {
