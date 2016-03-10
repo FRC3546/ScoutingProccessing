@@ -1,5 +1,9 @@
 package us.andrewdickinson.frc.scoutingproccessing;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -9,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Time;
@@ -241,5 +246,55 @@ public class TBACommunication {
         }
 
         throw new IllegalArgumentException("Match not found: " + match);
+    }
+
+
+    public void createPDF(String path) throws DocumentException, IOException{
+        Document pdfDocument = new Document();
+        PdfWriter writer = PdfWriter.getInstance(pdfDocument, new FileOutputStream(path));
+        writer.setMargins(0,0,0,0);
+        pdfDocument.open();
+
+        Font reg = new Font(Font.FontFamily.TIMES_ROMAN, 18.0f);
+        pdfDocument.add(new Phrase("Event Schedule - " + DataDefinitions.TBAConnection.eventCode, reg));
+
+        PdfPTable table = getPDFMatchTable();
+        table.setWidthPercentage(100);
+        pdfDocument.add(table);
+
+        pdfDocument.close();
+    }
+
+    public PdfPTable getPDFMatchTable(){
+        Font small = new Font(Font.FontFamily.TIMES_ROMAN, 11.0f);
+
+        PdfPTable table = new PdfPTable(7);
+        table.addCell(new Phrase("Match", small));
+        table.addCell(new Phrase("1", small));
+        table.addCell(new Phrase("2", small));
+        table.addCell(new Phrase("3", small));
+        table.addCell(new Phrase("4", small));
+        table.addCell(new Phrase("5", small));
+        table.addCell(new Phrase("6", small));
+
+        for (int i = 0; i < matches.length(); i++){
+            PdfPCell cell = new PdfPCell(new Phrase((i + 1) + "", small));
+            if (i % 2 == 0){
+                cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            }
+
+            table.addCell(cell);
+            int[] teams = getTeams(i + 1);
+            for (int team : teams){
+                PdfPCell cell2 = new PdfPCell(new Phrase(team + "", small));
+                if (i % 2 == 0){
+                    cell2.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                }
+
+                table.addCell(cell2);
+            }
+        }
+
+        return table;
     }
 }

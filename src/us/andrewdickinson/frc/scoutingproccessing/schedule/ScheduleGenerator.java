@@ -1,8 +1,18 @@
 package us.andrewdickinson.frc.scoutingproccessing.schedule;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
+import com.itextpdf.text.pdf.PdfWriter;
+import us.andrewdickinson.frc.scoutingproccessing.DataDefinitions;
+import us.andrewdickinson.frc.scoutingproccessing.Driver;
 import us.andrewdickinson.frc.scoutingproccessing.TBACommunication;
 
+import java.io.*;
+import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by Andrew on 3/8/16.
@@ -16,6 +26,15 @@ public class ScheduleGenerator {
     public ScheduleGenerator(){
         tba = TBACommunication.getInstance();
         scoutingSchedule = new ScoutingSchedule(tba);
+    }
+
+    public ScheduleGenerator(String savedPath) throws IOException, ClassNotFoundException {
+        tba = TBACommunication.getInstance();
+        FileInputStream fis = new FileInputStream(savedPath);
+        ObjectInputStream in = new ObjectInputStream(fis);
+        scoutingSchedule = (ScoutingSchedule) in.readObject();
+        in.close();
+        fis.close();
     }
 
     public void generate(double max_score_allowed){
@@ -61,6 +80,30 @@ public class ScheduleGenerator {
                 }
             }
         }
+    }
+
+    public void export(String path) throws DocumentException, IOException{
+        FileOutputStream fileOutputStream = new FileOutputStream(path);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(scoutingSchedule);
+        objectOutputStream.close();
+        fileOutputStream.close();
+    }
+
+    public void createPDF(String path) throws DocumentException, IOException{
+        Document pdfDocument = new Document();
+        PdfWriter writer = PdfWriter.getInstance(pdfDocument, new FileOutputStream(path));
+        writer.setMargins(0, 0, 0, 0);
+        pdfDocument.open();
+
+        Font reg = new Font(Font.FontFamily.TIMES_ROMAN, 18.0f);
+        pdfDocument.add(new Phrase("Scouting Schedule - " + DataDefinitions.TBAConnection.eventCode, reg));
+
+        PdfPTable table = scoutingSchedule.getPDFTable();
+        table.setWidthPercentage(100);
+        pdfDocument.add(table);
+
+        pdfDocument.close();
     }
 
     public boolean randomMapDeltaToKeep(double delta){

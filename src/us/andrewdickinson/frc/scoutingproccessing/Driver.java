@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * Created by Andrew on 2/28/16.
  */
 public class Driver {
-    public static void main(String[] args) throws IOException, DocumentException {
+    public static void main(String[] args) throws IOException, DocumentException, ClassNotFoundException {
         TreeMap<Integer, Team> teams = Importer.importAllData(args[0]);
 
         int path_index = Arrays.asList(args).indexOf("-o") + 1;
@@ -54,25 +54,36 @@ public class Driver {
                 ReportGenerator.mergeTeams(directory, outputPath, new ArrayList<>(teamNumbers));
                 break;
             case "schedule":
-                ScheduleGenerator gen = new ScheduleGenerator();
-                ScoutingSchedule schedule = gen.getScoutingSchedule();
+                if (new File("scouting_schedule").exists()){
+                    ScheduleGenerator gen = new ScheduleGenerator("scouting_schedule");
 
-                System.out.println("Seed Score: " + gen.getScoutingSchedule().getScore());
+                    Map<Integer, Integer> map = gen.getScoutingSchedule().getDistribution();
+                    System.out.println("Distribution: " + map);
+                    System.out.println("Score: " + gen.getScoutingSchedule().getScore());
 
-                Map<Integer, Integer> map = gen.getScoutingSchedule().getDistribution();
-                System.out.println("Seed Distribution: " + map);
+                    gen.createPDF("schedule.pdf");
+                } else {
+                    ScheduleGenerator gen = new ScheduleGenerator();
 
+                    System.out.println("Seed Score: " + gen.getScoutingSchedule().getScore());
 
-                System.out.println("Generating...");
-                gen.generate(.15);
+                    Map<Integer, Integer> map = gen.getScoutingSchedule().getDistribution();
+                    System.out.println("Seed Distribution: " + map);
 
-                System.out.println("Final Score: " + gen.getScoutingSchedule().getScore());
+                    System.out.println("Generating...");
+                    gen.generate(Double.parseDouble(args[2]));
 
-                map = gen.getScoutingSchedule().getDistribution();
-                System.out.println("Final Distribution: " + map);
+                    System.out.println("Final Score: " + gen.getScoutingSchedule().getScore());
 
-                System.out.println(schedule.equals(gen.getScoutingSchedule()));
+                    map = gen.getScoutingSchedule().getDistribution();
+                    System.out.println("Final Distribution: " + map);
 
+                    gen.createPDF("schedule.pdf");
+                    gen.export("scouting_schedule");
+                }
+
+            case "eventschedule":
+                TBACommunication.getInstance().createPDF("eventschedule.pdf");
         }
     }
 }

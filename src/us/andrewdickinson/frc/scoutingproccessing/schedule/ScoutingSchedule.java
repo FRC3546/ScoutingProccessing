@@ -1,18 +1,27 @@
 package us.andrewdickinson.frc.scoutingproccessing.schedule;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPHeaderCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import us.andrewdickinson.frc.scoutingproccessing.TBACommunication;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * Created by Andrew on 3/9/16.
  */
-public class ScoutingSchedule {
+public class ScoutingSchedule implements Serializable {
     private List<int[]> matches;
     private ArrayList<int[]> scoutingMatches;
 
     public ScoutingSchedule(TBACommunication tba){
+        if (!tba.scheduleGenerated()) throw new IllegalStateException("Event Schedule must be generated first");
+
         matches = new ArrayList<>();
         scoutingMatches = new ArrayList<>();
 
@@ -141,6 +150,37 @@ public class ScoutingSchedule {
 
     public int numberOfMatches(){
         return scoutingMatches.size();
+    }
+
+    public PdfPTable getPDFTable(){
+
+        Font small = new Font(Font.FontFamily.TIMES_ROMAN, 11.0f);
+
+        PdfPTable table = new PdfPTable(5);
+        table.addCell(new Phrase("Match", small));
+        table.addCell(new Phrase("1", small));
+        table.addCell(new Phrase("2", small));
+        table.addCell(new Phrase("3", small));
+        table.addCell(new Phrase("4", small));
+
+        for (int i = 0; i < scoutingMatches.size(); i++){
+            PdfPCell cell = new PdfPCell(new Phrase((i + 1) + "", small));
+            if (i % 2 == 0){
+                cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            }
+
+            table.addCell(cell);
+            for (int team : scoutingMatches.get(i)){
+                PdfPCell cell2 = new PdfPCell(new Phrase(team + "", small));
+                if (i % 2 == 0){
+                    cell2.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                }
+
+                table.addCell(cell2);
+            }
+        }
+
+        return table;
     }
 
     @Override
