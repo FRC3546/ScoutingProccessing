@@ -11,6 +11,15 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoField;
+import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Created by Andrew on 2/28/16.
@@ -21,15 +30,19 @@ public class TBACommunication {
     private JSONArray matches;
     private JSONArray ranks;
 
+    private ArrayList<Integer> eventDays;
+
     public static TBACommunication getInstance() {
         return instance;
     }
 
     public TBACommunication(String eventCode){
         this.eventCode = eventCode;
+        eventDays = new ArrayList<>();
         try {
             getMatches();
             getRankings();
+            if (scheduleGenerated()) setupEventDays();
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -37,6 +50,25 @@ public class TBACommunication {
 
     public boolean scheduleGenerated(){
         return  matches.length() > 0;
+    }
+
+    private void setupEventDays(){
+        if (!scheduleGenerated()) throw new UnsupportedOperationException();
+
+        for (int i =  0; i < matches.length(); i++){
+            JSONObject alliances = matches.getJSONObject(i).getJSONObject("alliances");
+
+            long t = matches.getJSONObject(i).getLong("time");
+
+            int day = LocalDateTime.ofEpochSecond(t, 0, ZoneOffset.UTC).get(ChronoField.DAY_OF_YEAR);
+            if (!eventDays.contains(day)){
+                eventDays.add(day);
+            }
+        }
+    }
+
+    public int getNumberOfMatches(){
+        return matches.length();
     }
 
     public int getRank(int team){
@@ -116,6 +148,10 @@ public class TBACommunication {
         throw new IllegalArgumentException();
     }
 
+    public int[] getTeams(int match){
+        return IntStream.concat(Arrays.stream(getRedTeams(match)), Arrays.stream(getBlueTeams(match))).toArray();
+    }
+
     private void getMatches() throws IOException{
         String url = DataDefinitions.TBAConnection.matches_url
                 .replace(DataDefinitions.TBAConnection.eventCodeDelimiter, eventCode);
@@ -186,5 +222,24 @@ public class TBACommunication {
         } finally {
             if (res != null) res.close();
         }
+    }
+
+    public boolean isMatchNotOnLastDay(int match){
+        if (eventDays.size() == 0) throw new IllegalArgumentException("Must generate eventDays first");
+
+        int last_day = eventDays.stream().max(Integer::compare).get();
+
+        for (int i =  0; i < matches.length(); i++){
+            if (matches.getJSONObject(i).getInt("match_number") == match){
+                JSONObject alliances = matches.getJSONObject(i).getJSONObject("alliances");
+
+                int t = matches.getJSONObject(i).getInt("time");
+                int day = LocalDateTime.ofEpochSecond(t, 0, ZoneOffset.UTC).get(ChronoField.DAY_OF_YEAR);
+
+                return day != last_day;
+            }
+        }
+
+        throw new IllegalArgumentException("Match not found: " + match);
     }
 }
