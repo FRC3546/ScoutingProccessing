@@ -1,13 +1,13 @@
 package us.andrewdickinson.frc.scoutingproccessing;
 
 import com.itextpdf.text.DocumentException;
-import org.apache.commons.lang3.StringUtils;
+import us.andrewdickinson.frc.scoutingproccessing.schedule.ScheduleGenerator;
+import us.andrewdickinson.frc.scoutingproccessing.schedule.ScoutingSchedule;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Created by Andrew on 2/28/16.
@@ -53,6 +53,26 @@ public class Driver {
 
                 ReportGenerator.mergeTeams(directory, outputPath, new ArrayList<>(teamNumbers));
                 break;
+            case "schedule":
+                ScheduleGenerator gen = new ScheduleGenerator();
+                ScoutingSchedule schedule = gen.getScoutingSchedule();
+
+                System.out.println("Seed Score: " + gen.getScoutingSchedule().getScore());
+
+                Map<Integer, Integer> map = gen.getScoutingSchedule().getDistribution();
+                System.out.println("Seed Distribution: " + map);
+
+
+                System.out.println("Generating...");
+                gen.generate(.15);
+
+                System.out.println("Final Score: " + gen.getScoutingSchedule().getScore());
+
+                map = gen.getScoutingSchedule().getDistribution();
+                System.out.println("Final Distribution: " + map);
+
+                System.out.println(schedule.equals(gen.getScoutingSchedule()));
+
         }
     }
 }
