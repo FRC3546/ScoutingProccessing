@@ -37,11 +37,14 @@ public class TeamPDFGenerator {
     public void addHeader() throws DocumentException, IOException {
         int team_number = teamReport.getTeamNumber();
         int rank = TBACommunication.getInstance().getRank(team_number);
+        String team_name = TBACommunication.getInstance().getTeamName(team_number);
         int matches = teamReport.getMatchesPlayed();
 
         addPhrase(Integer.toString(team_number), bold);
         addPhrase(" Rank #" + rank, reg);
         addPhrase(" (" + matches + " matches played)", ital);
+
+        addTextLine("\"" + team_name + "\"", small);
 
         addTextLine("Pit Scout: " + teamReport.getPitScout(), small);
         addTextLine(teamReport.getDriveTrain() + " ("

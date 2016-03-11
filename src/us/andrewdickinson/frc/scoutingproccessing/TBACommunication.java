@@ -34,6 +34,7 @@ public class TBACommunication {
     private String eventCode;
     private JSONArray matches;
     private JSONArray ranks;
+    private JSONArray teams;
 
     private ArrayList<Integer> eventDays;
 
@@ -47,6 +48,7 @@ public class TBACommunication {
         try {
             getMatches();
             getRankings();
+            getTeams();
             if (scheduleGenerated()) setupEventDays();
         } catch (IOException e){
             e.printStackTrace();
@@ -84,6 +86,16 @@ public class TBACommunication {
         }
 
         return 0;
+    }
+
+    public String getTeamName(int team){
+        for (int i = 0; i < teams.length(); i++){
+            if (teams.getJSONObject(i).getInt("team_number") == team){
+                return teams.getJSONObject(i).getString("nickname");
+            }
+        }
+
+        return "NULL";
     }
 
     /**
@@ -222,6 +234,37 @@ public class TBACommunication {
             JSONArray ranks = new JSONArray(response);
 
             this.ranks = ranks;
+        } catch (ClientProtocolException e){
+            throw new IOException();
+        } finally {
+            if (res != null) res.close();
+        }
+    }
+
+    private void getTeams() throws IOException{
+        String url = DataDefinitions.TBAConnection.teams_url
+                .replace(DataDefinitions.TBAConnection.eventCodeDelimiter, eventCode);
+
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        HttpGet httpGet = new HttpGet(url);
+        httpGet.addHeader(DataDefinitions.TBAConnection.tbaAppIdHeaderName,
+                DataDefinitions.TBAConnection.tbaAppId);
+
+        CloseableHttpResponse res = null;
+        try {
+            res = httpClient.execute(httpGet);
+
+            BufferedReader rd = new BufferedReader
+                    (new InputStreamReader(res.getEntity().getContent()));
+
+            String response = "";
+            String line;
+            while ((line = rd.readLine()) != null) {
+                response += line;
+            }
+
+            this.teams = new JSONArray(response);
         } catch (ClientProtocolException e){
             throw new IOException();
         } finally {
