@@ -32,9 +32,13 @@ public class Driver {
                 MatchReport mr = new MatchReport(teams, Integer.parseInt(args[2]));
                 mr.generateMatchPDF(path);
                 break;
+            case "alliance":
+                MatchReport mr2 = new MatchReport(teams, Integer.parseInt(args[2]), true);
+                mr2.generateMatchPDF(path);
+                break;
             case "matchteams":
-                MatchReport mr2 = new MatchReport(teams, Integer.parseInt(args[2]));
-                mr2.generateMatchTeamsPDF(path);
+                MatchReport mr3 = new MatchReport(teams, Integer.parseInt(args[2]));
+                mr3.generateMatchTeamsPDF(path);
                 break;
             case "allteams":
                 String outputPath = path + "allteams.pdf";

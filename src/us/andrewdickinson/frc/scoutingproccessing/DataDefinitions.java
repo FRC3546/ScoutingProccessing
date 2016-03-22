@@ -210,6 +210,8 @@ public class DataDefinitions {
         public static final String eventCodeDelimiter = "<CODE>";
         public static final String matches_url =
                 "http://www.thebluealliance.com/api/v2/event/" + eventCodeDelimiter + "/matches";
+        public static final String alliances_url =
+                "http://www.thebluealliance.com/api/v2/event/" + eventCodeDelimiter;
         public static final String rankings_url =
                 "http://www.thebluealliance.com/api/v2/event/" + eventCodeDelimiter + "/rankings";
         public static final String teams_url =

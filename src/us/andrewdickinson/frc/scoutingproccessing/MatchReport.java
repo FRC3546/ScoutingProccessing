@@ -24,6 +24,11 @@ public class MatchReport {
     ArrayList<TeamReport> redTeams;
     ArrayList<TeamReport> blueTeams;
 
+    public MatchReport(ArrayList<TeamReport> redTeams, ArrayList<TeamReport> blueTeams){
+        this.redTeams = redTeams;
+        this.blueTeams = blueTeams;
+    }
+
     public MatchReport(TreeMap<Integer, Team> allTeams, int match){
         this.match = match;
         TBACommunication tbaCommunication = TBACommunication.getInstance();
@@ -40,6 +45,31 @@ public class MatchReport {
 
         for (int teamNum : blueTeams){
             if (allTeams.get(teamNum) != null) this.blueTeams.add(new TeamReport(allTeams.get(teamNum)));
+        }
+    }
+
+    public MatchReport(TreeMap<Integer, Team> allTeams, int alliance, boolean isElimAlliance){
+        if (!isElimAlliance) throw new IllegalArgumentException();
+        this.match = 0;
+
+        TBACommunication tbaCommunication = TBACommunication.getInstance();
+        int[] teams = tbaCommunication.getAllianceTeams(alliance);
+
+        this.redTeams = new ArrayList<>();
+        this.blueTeams = new ArrayList<>();
+
+        if (teams.length == 3) {
+            for (int teamNum : teams){
+                if (allTeams.get(teamNum) != null) this.redTeams.add(new TeamReport(allTeams.get(teamNum)));
+            }
+        } else if (teams.length == 4) {
+            for (int i = 0; i < 3; i++){
+                if (allTeams.get(teams[i]) != null) this.redTeams.add(new TeamReport(allTeams.get(teams[i])));
+            }
+
+            if (allTeams.get(3) != null) this.blueTeams.add(new TeamReport(allTeams.get(teams[3])));
+        } else {
+            throw new IllegalArgumentException();
         }
     }
 

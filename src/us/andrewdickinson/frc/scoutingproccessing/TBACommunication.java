@@ -35,6 +35,7 @@ public class TBACommunication {
     private JSONArray matches;
     private JSONArray ranks;
     private JSONArray teams;
+    private JSONArray alliances;
 
     private ArrayList<Integer> eventDays;
 
@@ -49,6 +50,7 @@ public class TBACommunication {
             getMatches();
             getRankings();
             getTeams();
+            getElimAlliances();
             if (scheduleGenerated()) setupEventDays();
         } catch (IOException e){
             e.printStackTrace();
@@ -169,6 +171,27 @@ public class TBACommunication {
         return IntStream.concat(Arrays.stream(getRedTeams(match)), Arrays.stream(getBlueTeams(match))).toArray();
     }
 
+    public int[] getAllianceTeams(int alliance){
+        if (alliances == null) throw new UnsupportedOperationException();
+
+        JSONObject allianceObj = alliances.getJSONObject(alliance - 1);
+        JSONArray jsonTeams = allianceObj.getJSONArray("picks");
+
+        int[] teams = new int[jsonTeams.length()];
+        for (int i = 0; i < jsonTeams.length(); i++){
+            teams[i] = Integer.parseInt(jsonTeams.getString(i).substring(3));
+        }
+
+        if (teams.length > 2){
+            int temp = teams[0];
+            teams[0] = teams[1];
+            teams[1] = temp;
+        }
+
+
+        return teams;
+    }
+
     private void getMatches() throws IOException{
         String url = DataDefinitions.TBAConnection.matches_url
                 .replace(DataDefinitions.TBAConnection.eventCodeDelimiter, eventCode);
@@ -201,6 +224,40 @@ public class TBACommunication {
             }
 
             this.matches = matches;
+        } catch (ClientProtocolException e){
+            throw new IOException();
+        } finally {
+            if (res != null) res.close();
+        }
+    }
+
+    private void getElimAlliances() throws IOException{
+        String url = DataDefinitions.TBAConnection.alliances_url
+                .replace(DataDefinitions.TBAConnection.eventCodeDelimiter, eventCode);
+
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        HttpGet httpGet = new HttpGet(url);
+        httpGet.addHeader(DataDefinitions.TBAConnection.tbaAppIdHeaderName,
+                DataDefinitions.TBAConnection.tbaAppId);
+
+        CloseableHttpResponse res = null;
+        try {
+            res = httpClient.execute(httpGet);
+
+            BufferedReader rd = new BufferedReader
+                    (new InputStreamReader(res.getEntity().getContent()));
+
+            String response = "";
+            String line;
+            while ((line = rd.readLine()) != null) {
+                response += line;
+            }
+
+            JSONObject eventData = new JSONObject(response);
+            JSONArray alliances = eventData.getJSONArray("alliances");
+
+            this.alliances = alliances;
         } catch (ClientProtocolException e){
             throw new IOException();
         } finally {
