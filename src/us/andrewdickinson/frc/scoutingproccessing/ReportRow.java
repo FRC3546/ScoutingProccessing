@@ -26,7 +26,11 @@ public class ReportRow {
         if (claimed || (!claim_text.equals("Yes") && !aboutADefense)) {
             return new String[]{taskDescription, claim_text, dataReport};
         } else {
-            return new String[]{taskDescription, "No", "N/A"};
+            if (dataReport.contains(ReportStrings.neverDemonstrated) && !claimed) {
+                return new String[]{taskDescription, "No", "N/A"};
+            } else {
+                return new String[]{taskDescription, "No", dataReport};
+            }
         }
     }
 
