@@ -63,7 +63,7 @@ public class HeaderManagement {
         }
 
         if (headers_with_identifier.size() == 0){
-            throw new IllegalStateException("The specified header is not included in the sheet headers");
+            throw new IllegalStateException("The specified header is not included in the sheet headers: " + unique_identifier);
         } else if (headers_with_identifier.size() == 1) {
             return sheet_headers.indexOf(headers_with_identifier.get(0));
         } else {
