@@ -379,7 +379,7 @@ public class TeamReport {
     public String getTeleopScoreHighSummary(){
        int goals = getTotalHighGoal();
         if (goals == 0) return ReportStrings.neverDemonstrated;
-        return goals + " total (" + getAverageLowGoal() + " per match). " +
+        return goals + " total (" + getAverageHighGoal() + " per match). " +
                 ReportStrings.getPerformanceSummary(getScoringSuccess());
     }
 
