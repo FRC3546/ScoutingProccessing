@@ -137,15 +137,17 @@ public class Importer {
         ArrayList<ArrayList<String>> sheetRows = new ArrayList<>();
         for (int i = 0; i <= pit_sheet.getLastRowNum(); i++) {
             ArrayList<String> sheetRow = new ArrayList<>();
-            for (int j = 0; j <= pit_sheet.getRow(i).getLastCellNum(); j++) {
-                XSSFCell cell = pit_sheet.getRow(i).getCell(j); //Might be null
-                if (cell != null) {
-                    sheetRow.add(cell.toString());
-                } else {
-                    sheetRow.add("");
+            if (pit_sheet.getRow(i) != null) {
+                for (int j = 0; j <= pit_sheet.getRow(i).getLastCellNum(); j++) {
+                    XSSFCell cell = pit_sheet.getRow(i).getCell(j); //Might be null
+                    if (cell != null) {
+                        sheetRow.add(cell.toString());
+                    } else {
+                        sheetRow.add("");
+                    }
                 }
+                sheetRows.add(sheetRow);
             }
-            sheetRows.add(sheetRow);
         }
 
         return sheetRows;
