@@ -117,6 +117,8 @@ public class Driver {
                 writer.setMargins(0, 0, 0, 0);
                 document.open();
 
+                Collections.sort(not_scouted);
+
                 for (Integer team : not_scouted){
                     document.add(new Phrase(team.toString() + "\n"));
                 }
