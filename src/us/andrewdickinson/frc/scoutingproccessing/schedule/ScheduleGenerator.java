@@ -23,9 +23,9 @@ public class ScheduleGenerator {
 
     public static final boolean RANDOM_ANEALING_ENABLED = true;
 
-    public ScheduleGenerator(){
+    public ScheduleGenerator(int scouts_per_match){
         tba = TBACommunication.getInstance();
-        scoutingSchedule = new ScoutingSchedule(tba);
+        scoutingSchedule = new ScoutingSchedule(tba, scouts_per_match);
     }
 
     public ScheduleGenerator(String savedPath) throws IOException, ClassNotFoundException {

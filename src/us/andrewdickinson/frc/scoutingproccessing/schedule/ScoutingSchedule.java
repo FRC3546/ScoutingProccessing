@@ -18,12 +18,15 @@ import java.util.stream.Collectors;
 public class ScoutingSchedule implements Serializable {
     private List<int[]> matches;
     private ArrayList<int[]> scoutingMatches;
+    private int scouts_per_match;
 
-    public ScoutingSchedule(TBACommunication tba){
+    public ScoutingSchedule(TBACommunication tba, int scouts_per_match){
         if (!tba.scheduleGenerated()) throw new IllegalStateException("Event Schedule must be generated first");
 
         matches = new ArrayList<>();
         scoutingMatches = new ArrayList<>();
+
+        this.scouts_per_match = scouts_per_match;
 
         if (tba.scheduleGenerated()){
             for (int i = 1; i <= tba.getNumberOfMatches(); i++){
@@ -34,13 +37,13 @@ public class ScoutingSchedule implements Serializable {
         for (int[] match : matches){
             Random r = new Random();
             List<Integer> matchList = Arrays.stream(match).boxed().collect(Collectors.toList());
-            int[] match_reduced = new int[4];
-            for (int i = 0; i < 4; i++){
+            int[] match_reduced = new int[scouts_per_match];
+            for (int i = 0; i < scouts_per_match; i++){
                 int team = r.nextInt(6 - i);
                 match_reduced[i] = matchList.remove(team);
             }
             scoutingMatches.add(match_reduced);
-//            scoutingMatches.add(Arrays.copyOfRange(match, 0, 4));
+//            scoutingMatches.add(Arrays.copyOfRange(match, 0, scouts_per_match));
         }
     }
 
@@ -108,7 +111,7 @@ public class ScoutingSchedule implements Serializable {
     }
 
     public Map<Integer, Integer> getFrequencyMap(){
-        Map<Integer, Integer> numberOfMatchesDistribution = new HashMap<>(45);
+        Map<Integer, Integer> numberOfMatchesDistribution = new HashMap<>(105);
         for (int[] match : scoutingMatches){
             for (int team : match){
                 if (numberOfMatchesDistribution.containsKey(team)){
@@ -130,7 +133,7 @@ public class ScoutingSchedule implements Serializable {
             }
         }
 
-        throw new IllegalArgumentException("Team: " + find + " not found for given match");
+        throw new IllegalArgumentException("Team: " + find + " not found for given match: " + match);
     }
 
     public int[] getTeamReplacementOptions(int match){
@@ -156,12 +159,11 @@ public class ScoutingSchedule implements Serializable {
 
         Font small = new Font(Font.FontFamily.TIMES_ROMAN, 11.0f);
 
-        PdfPTable table = new PdfPTable(5);
+        PdfPTable table = new PdfPTable(1 + scouts_per_match);
         table.addCell(new Phrase("Match", small));
-        table.addCell(new Phrase("1", small));
-        table.addCell(new Phrase("2", small));
-        table.addCell(new Phrase("3", small));
-        table.addCell(new Phrase("4", small));
+        for (int i = 0; i < scouts_per_match; i++){
+            table.addCell(new Phrase("" + (i + 1), small));
+        }
 
         for (int i = 0; i < scoutingMatches.size(); i++){
             PdfPCell cell = new PdfPCell(new Phrase((i + 1) + "", small));

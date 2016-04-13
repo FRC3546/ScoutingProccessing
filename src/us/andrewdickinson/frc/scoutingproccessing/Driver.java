@@ -67,7 +67,7 @@ public class Driver {
 
                     gen.createPDF("schedule.pdf");
                 } else {
-                    ScheduleGenerator gen = new ScheduleGenerator();
+                    ScheduleGenerator gen = new ScheduleGenerator(Integer.parseInt(args[2]));
 
                     System.out.println("Seed Score: " + gen.getScoutingSchedule().getScore());
 
@@ -75,7 +75,7 @@ public class Driver {
                     System.out.println("Seed Distribution: " + map);
 
                     System.out.println("Generating...");
-                    gen.generate(Double.parseDouble(args[2]));
+                    gen.generate(Double.parseDouble(args[3]));
 
                     System.out.println("Final Score: " + gen.getScoutingSchedule().getScore());
 
