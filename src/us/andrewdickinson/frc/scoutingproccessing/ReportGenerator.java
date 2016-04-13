@@ -42,7 +42,6 @@ public class ReportGenerator {
 
     public void generate() throws IOException, DocumentException{
         teamPdfGenerator.startTable();
-        addTask("Reach Defense (Auto)", teamReport.getClaimAutoCanReachDefense(), teamReport.getReachedDefenseSummary());
         addTask("Low Bar (Auto)", teamReport.getClaimAutoCanCrossLowBar(), teamReport.getAutoLowBarSummary());
         addTask("Cross Other Defenses (Auto)", teamReport.getClaimAutoCanCrossOtherDefenses(), teamReport.getAutoCrossedDefenseSummary());
         addTask("Score Low (Auto)", teamReport.getClaimAutoCanScoreLow(), teamReport.getAutoScoreLowSummary());
@@ -63,17 +62,13 @@ public class ReportGenerator {
         addTask("Can Score Low? (Teleop)", teamReport.getClaimTeleopBoulderLowGoal(), teamReport.getTeleopScoreLowSummary());
         addTask("Can Score High? (Teleop)", teamReport.getClaimTeleopBoulderHighGoal(), teamReport.getTeleopScoreHighSummary());
 
-        addTask("Can Herd Boulder on Ground?", teamReport.getClaimTeleopBoulderHerd());
-        addTask("Can Pick Up Boulder from Ground?", teamReport.getClaimTeleopBoulderPickup());
-
-        addTask("Can Challenge?", teamReport.getClaimTeleopEndgameCanChallenge(), teamReport.getChallengeSummary());
+        addTask("Can Challenge?", true, teamReport.getChallengeSummary());
         addTask("Can Scale?", teamReport.getClaimTeleopEndgameCanScale(), teamReport.getScaleSummary());
 
-        addTask("Rotates Drivers?", teamReport.getClaimRotatesDrivers());
         teamPdfGenerator.addRow(new ReportRow(
-                "Driver Experience",
+                "Driver Skill",
                 true,
-                teamReport.getClaimDriverExperience().name().replace("_", " "),
+                "N/A",
                 teamReport.getDriverCoordinationSummary(),
                 false
         ));

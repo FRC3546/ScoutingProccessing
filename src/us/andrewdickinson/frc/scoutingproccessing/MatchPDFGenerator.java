@@ -74,7 +74,6 @@ public class MatchPDFGenerator {
                                 claimsMap.get(defense),
                                 ReportStrings.getPerformanceSummary(successTable.getFrequencyMap(defense))));
 
-        teamTable.addTask("Auto Reach", teamReport.getClaimAutoCanReachDefense(), teamReport.getReachedDefenseSummary());
         teamTable.addTask("Auto Low Bar", teamReport.getClaimAutoCanCrossLowBar(), teamReport.getAutoLowBarSummary());
         teamTable.addTask("Auto Other D", teamReport.getClaimAutoCanCrossOtherDefenses(), teamReport.getAutoCrossedDefenseSummary());
         teamTable.addTask("Auto Low", teamReport.getClaimAutoCanScoreLow(), teamReport.getAutoScoreLowSummary());
@@ -83,17 +82,13 @@ public class MatchPDFGenerator {
         teamTable.addTask("Teleop Low", teamReport.getClaimTeleopBoulderLowGoal(), teamReport.getTeleopScoreLowSummary());
         teamTable.addTask("Teleop High", teamReport.getClaimTeleopBoulderHighGoal(), teamReport.getTeleopScoreHighSummary());
 
-        teamTable.addTask("Herd Boulder", teamReport.getClaimTeleopBoulderHerd());
-        teamTable.addTask("Pick Up Boulder", teamReport.getClaimTeleopBoulderPickup());
-
-        teamTable.addTask("Challenge", teamReport.getClaimTeleopEndgameCanChallenge(), teamReport.getChallengeSummary());
+        teamTable.addTask("Challenge", true, teamReport.getChallengeSummary());
         teamTable.addTask("Scale", teamReport.getClaimTeleopEndgameCanScale(), teamReport.getScaleSummary());
 
-        teamTable.addTask("Rot. Drivers", teamReport.getClaimRotatesDrivers());
         teamTable.addRow(new ReportRow(
-                "Driver XP",
+                "Driver Skill",
                 true,
-                teamReport.getClaimDriverExperience().name().replace("_", " "),
+                "N/A",
                 teamReport.getDriverCoordinationSummary(),
                 false
         ));
@@ -145,8 +140,7 @@ public class MatchPDFGenerator {
         phrase.add(new Chunk(" (" + matches + ")", small));
         phrase.add(new Chunk(" - ", small));
 
-        phrase.add(new Chunk(teamReport.getDriveTrain() + " ("
-                + teamReport.getGroundClearance() + "\")\n", small));
+        phrase.add(new Chunk(teamReport.getDriveTrain() + "\n", small));
 
         ArrayList<Integer> midLineCrossings = teamReport.getMatchesWhereRobotCrossedMidline();
         if (midLineCrossings.size() == 0){

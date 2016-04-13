@@ -47,8 +47,7 @@ public class TeamPDFGenerator {
         addTextLine("\"" + team_name + "\"", small);
 
         addTextLine("Pit Scout: " + teamReport.getPitScout(), small);
-        addTextLine(teamReport.getDriveTrain() + " ("
-                + teamReport.getGroundClearance() + "\" ground clearance)", small);
+        addTextLine(teamReport.getDriveTrain(), small);
 
         ArrayList<Integer> midLineCrossings = teamReport.getMatchesWhereRobotCrossedMidline();
         if (midLineCrossings.size() == 0){

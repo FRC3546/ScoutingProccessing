@@ -23,10 +23,8 @@ public class Tests {
             assertTrue(4098 == t.getTeamNumber());
 
             assertEquals("4 Wheel Tank", t.getDrivetrain());
-            assertTrue(t.getGroundClearance() == 4);
             assertTrue(t.getClaimAutoCrossLowBar());
             assertTrue(t.getClaimAutoCrossOtherDefense());
-            assertTrue(t.getClaimAutoReachDefense());
             assertFalse(t.getClaimAutoScoreLow());
             assertFalse(t.getClaimAutoScoreHigh());
 
@@ -42,16 +40,10 @@ public class Tests {
             claimedDefCross.put(Defense.Rock_Wall, CrossCapability.CrossSwiftly);
             assertEquals(claimedDefCross, t.getClaimTeleopDefenseCrossAbility());
 
-            assertTrue(t.getClaimTeleopBoulderPickup());
-            assertTrue(t.getClaimTeleopBoulderHerd());
             assertTrue(t.getClaimTeleopBoulderLowgoal());
             assertFalse(t.getClaimTeleopBoulderHighgoal());
 
             assertTrue(t.getClaimTeleopScale());
-            assertTrue(t.getClaimTeleopChallenge());
-
-            assertTrue(t.getRotatesDrivers());
-            assertEquals(DriverExperience.Third_Year, t.getDriverExperienceLevel());
 
             assertEquals("", t.getComment());
 

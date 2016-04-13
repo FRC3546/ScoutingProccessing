@@ -57,7 +57,6 @@ public class Importer {
             Team.Builder b = new Team.Builder(team_number);
             b.scout_name(row.get(hm.indexForUID("scout_name")));
             b.drivetrain(row.get(hm.indexForUID("drivetrain")));
-            b.ground_clearance(row.get(hm.indexForUID("ground_clearance")));
             b.auto_claims(row.get((hm.indexForUID("autonomous_claims"))));
             b.claim_teleop_lowbar_cross_ability(row.get(hm.indexForUID("lowbar_claim")));
             b.claim_teleop_chevaldefrise_cross_ability(row.get(hm.indexForUID("chevaldefrise_claim")));
@@ -70,8 +69,6 @@ public class Importer {
             b.claim_teleop_rockwall_cross_ability(row.get(hm.indexForUID("rockwall_claim")));
             b.boulder_claims(row.get(hm.indexForUID("boulder_claims")));
             b.endgame_claims(row.get(hm.indexForUID("endgame_claims")));
-            b.driver_experience(row.get(hm.indexForUID("driver_experience")));
-            b.drive_team_rotated(row.get(hm.indexForUID("rotated_drivers")));
             b.comment(row.get(hm.indexForUID("comments")));
 
             teams.add(b.build());

@@ -35,11 +35,6 @@ public class TeamReport {
     public String getDriveTrain(){
         return team.getDrivetrain();
     }
-
-    public Double getGroundClearance(){
-        return team.getGroundClearance();
-    }
-
     public boolean getClaimAutoCanScoreHigh(){
         return team.getClaimAutoScoreHigh();
     }
@@ -56,22 +51,9 @@ public class TeamReport {
         return team.getClaimAutoCrossOtherDefense();
     }
 
-    public boolean getClaimAutoCanReachDefense(){
-        return team.getClaimAutoReachDefense();
-    }
-
     public HashMap<Defense, CrossCapability> getClaimTeleopDefenseCrossAbility(){
         return team.getClaimTeleopDefenseCrossAbility();
     }
-
-    public boolean getClaimTeleopBoulderHerd(){
-        return team.getClaimTeleopBoulderHerd();
-    }
-
-    public boolean getClaimTeleopBoulderPickup(){
-        return team.getClaimTeleopBoulderPickup();
-    }
-
     public boolean getClaimTeleopBoulderLowGoal(){
         return team.getClaimTeleopBoulderLowgoal();
     }
@@ -80,20 +62,8 @@ public class TeamReport {
         return team.getClaimTeleopBoulderHighgoal();
     }
 
-    public boolean getClaimTeleopEndgameCanChallenge(){
-        return team.getClaimTeleopChallenge();
-    }
-
     public boolean getClaimTeleopEndgameCanScale(){
         return team.getClaimTeleopScale();
-    }
-
-    public boolean getClaimRotatesDrivers(){
-        return team.getRotatesDrivers();
-    }
-
-    public DriverExperience getClaimDriverExperience(){
-        return team.getDriverExperienceLevel();
     }
 
     public int getMatchesPlayed(){
