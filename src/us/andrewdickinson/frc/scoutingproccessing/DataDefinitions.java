@@ -72,7 +72,7 @@ public class DataDefinitions {
 
         instance.crossCapabilityHeaderDefinition.put("Cannot Cross Without Assistance", CrossCapability.NotAble);
         instance.crossCapabilityHeaderDefinition.put("Crosses Slowly", CrossCapability.CrossSlow);
-        instance.crossCapabilityHeaderDefinition.put("Crosses", CrossCapability.Cross);
+        instance.crossCapabilityHeaderDefinition.put("Can Cross", CrossCapability.Cross);
         instance.crossCapabilityHeaderDefinition.put("Crosses Swiftly", CrossCapability.CrossSwiftly);
 
         instance.crossActionHeaderDefinition.put("Did Not Attempt", CrossAction.NotAttempted);
