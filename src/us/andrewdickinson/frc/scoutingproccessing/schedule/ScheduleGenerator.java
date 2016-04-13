@@ -91,6 +91,11 @@ public class ScheduleGenerator {
     }
 
     public void createPDF(String path) throws DocumentException, IOException{
+        createPDF(path, false, false);
+    }
+
+
+    public void createPDF(String path, boolean split_odd_even, boolean want_odd) throws DocumentException, IOException{
         Document pdfDocument = new Document();
         PdfWriter writer = PdfWriter.getInstance(pdfDocument, new FileOutputStream(path));
         writer.setMargins(0, 0, 0, 0);
@@ -99,7 +104,7 @@ public class ScheduleGenerator {
         Font reg = new Font(Font.FontFamily.TIMES_ROMAN, 18.0f);
         pdfDocument.add(new Phrase("Scouting Schedule - " + DataDefinitions.TBAConnection.eventCode, reg));
 
-        PdfPTable table = scoutingSchedule.getPDFTable();
+        PdfPTable table = scoutingSchedule.getPDFTable(split_odd_even, want_odd);
         table.setWidthPercentage(100);
         pdfDocument.add(table);
 

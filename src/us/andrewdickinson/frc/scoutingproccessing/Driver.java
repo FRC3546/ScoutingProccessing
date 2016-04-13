@@ -70,7 +70,11 @@ public class Driver {
                     System.out.println("Distribution: " + map);
                     System.out.println("Score: " + gen.getScoutingSchedule().getScore());
 
-                    gen.createPDF("schedule.pdf");
+                    if (args[2] != null && !args[2].equals("") && !args[2].equals("-o")) {
+                        gen.createPDF("schedule.pdf", true, Integer.parseInt(args[2]) % 2 == 0);
+                    } else {
+                        gen.createPDF("schedule.pdf");
+                    }
                 } else {
                     ScheduleGenerator gen = new ScheduleGenerator(Integer.parseInt(args[2]));
 
@@ -87,7 +91,12 @@ public class Driver {
                     map = gen.getScoutingSchedule().getDistribution();
                     System.out.println("Final Distribution: " + map);
 
-                    gen.createPDF("schedule.pdf");
+                    if (args[2] != null && !args[2].equals("") && !args[2].equals("-o")) {
+                        gen.createPDF("schedule.pdf", true, Integer.parseInt(args[2]) % 2 == 0);
+                    } else {
+                        gen.createPDF("schedule.pdf");
+                    }
+
                     gen.export("scouting_schedule");
                 }
 

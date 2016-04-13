@@ -156,7 +156,10 @@ public class ScoutingSchedule implements Serializable {
     }
 
     public PdfPTable getPDFTable(){
+        return getPDFTable(false, false);
+    }
 
+    public PdfPTable getPDFTable(boolean seperate_odd_even, boolean requesting_odd){
         Font small = new Font(Font.FontFamily.TIMES_ROMAN, 11.0f);
 
         PdfPTable table = new PdfPTable(1 + scouts_per_match);
@@ -165,21 +168,30 @@ public class ScoutingSchedule implements Serializable {
             table.addCell(new Phrase("" + (i + 1), small));
         }
 
-        for (int i = 0; i < scoutingMatches.size(); i++){
+        int delta = 1;
+        if (seperate_odd_even) delta = 2;
+
+        int start = 0;
+        if (requesting_odd) start = 1;
+
+        int row = 0;
+        for (int i = start; i < scoutingMatches.size(); i = i + delta){
             PdfPCell cell = new PdfPCell(new Phrase((i + 1) + "", small));
-            if (i % 2 == 0){
+            if (row % 2 == 0){
                 cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
             }
 
             table.addCell(cell);
             for (int team : scoutingMatches.get(i)){
                 PdfPCell cell2 = new PdfPCell(new Phrase(team + "", small));
-                if (i % 2 == 0){
+                if (row % 2 == 0){
                     cell2.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 }
 
                 table.addCell(cell2);
             }
+
+            row++;
         }
 
         return table;
