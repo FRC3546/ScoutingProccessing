@@ -1,10 +1,15 @@
 package us.andrewdickinson.frc.scoutingproccessing;
 
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfWriter;
 import us.andrewdickinson.frc.scoutingproccessing.schedule.ScheduleGenerator;
 import us.andrewdickinson.frc.scoutingproccessing.schedule.ScoutingSchedule;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -88,6 +93,35 @@ public class Driver {
 
             case "eventschedule":
                 TBACommunication.getInstance().createPDF("eventschedule.pdf");
+
+            case "pitgaps":
+                List<Integer> event_teams = TBACommunication.getInstance().getTeamNumbers();
+                List<Integer> pit_scouted = new ArrayList<>();
+                pit_scouted.addAll(teams.keySet());
+
+                List<Integer> not_scouted = new ArrayList<>();
+                for (Integer team : event_teams){
+                    if (!pit_scouted.contains(team)) not_scouted.add(team);
+                }
+
+                if (path.equals("")) path = "pitgaps.pdf";
+
+                String outputPath1 = path + ".pdf";
+
+                if (path.contains(".pdf")){
+                    outputPath1 = path;
+                }
+
+                Document document = new Document(PageSize.LETTER);
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(outputPath1));
+                writer.setMargins(0, 0, 0, 0);
+                document.open();
+
+                for (Integer team : not_scouted){
+                    document.add(new Phrase(team.toString() + "\n"));
+                }
+
+                document.close();
         }
     }
 }

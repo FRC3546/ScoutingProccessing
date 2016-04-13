@@ -101,6 +101,19 @@ public class TBACommunication {
     }
 
     /**
+     * Get a list of the teams at this event
+     * @return the list of  teams
+     */
+    public ArrayList<Integer> getTeamNumbers(){
+        ArrayList<Integer> numbers = new ArrayList<>();
+        for (int i = 0; i < teams.length(); i++){
+            numbers.add(Integer.parseInt(teams.getJSONObject(i).getString("key").substring(3)));
+        }
+
+        return numbers;
+    }
+
+    /**
      * Converts a match number, alliance, and station number into the corresponding team number
      * @param match The qualification match number to look up
      * @param alliance The alliance that the target team is on
