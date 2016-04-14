@@ -28,7 +28,6 @@ public class DataDefinitions {
         instance.pitScoutingHeaders.addHeader("team_number", "Team Number");
         instance.pitScoutingHeaders.addHeader("scout_name", "Who scouted this robot?");
         instance.pitScoutingHeaders.addHeader("drivetrain", "Drivetrain");
-        instance.pitScoutingHeaders.addHeader("ground_clearance", "Ground Clearance (inches)");
         instance.pitScoutingHeaders.addHeader("autonomous_claims", "Autonomous Mode. Can they...");
         instance.pitScoutingHeaders.addHeader("lowbar_claim", "Defense Crossing Ability (Teleop) [Low Bar]");
         instance.pitScoutingHeaders.addHeader("chevaldefrise_claim", "Defense Crossing Ability (Teleop) [Cheval De Frise]");
@@ -41,8 +40,6 @@ public class DataDefinitions {
         instance.pitScoutingHeaders.addHeader("rockwall_claim", "Defense Crossing Ability (Teleop) [Rock Wall]");
         instance.pitScoutingHeaders.addHeader("boulder_claims", "Boulder Manipulation. Can they...");
         instance.pitScoutingHeaders.addHeader("endgame_claims", "Endgame. Can they...");
-        instance.pitScoutingHeaders.addHeader("rotated_drivers", "Do you rotate drivers over the course of the day?");
-        instance.pitScoutingHeaders.addHeader("driver_experience", "How long have your drivers been driving?");
         instance.pitScoutingHeaders.addHeader("comments", "Comments (Optional)");
 
         instance.matchScoutingHeaders.addHeader("matchnum", "Match Number (i.e. \"3\" or \"27\")");

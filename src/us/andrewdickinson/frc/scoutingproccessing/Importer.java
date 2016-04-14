@@ -69,7 +69,11 @@ public class Importer {
             b.claim_teleop_rockwall_cross_ability(row.get(hm.indexForUID("rockwall_claim")));
             b.boulder_claims(row.get(hm.indexForUID("boulder_claims")));
             b.endgame_claims(row.get(hm.indexForUID("endgame_claims")));
-            b.comment(row.get(hm.indexForUID("comments")));
+            if (row.size() > hm.indexForUID("comments")){
+                b.comment(row.get(hm.indexForUID("comments")));
+            } else {
+                b.comment("");
+            }
 
             teams.add(b.build());
         }
